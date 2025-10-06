@@ -21,6 +21,10 @@ void main(){
   // fitur auto convert pada var
   golongan = 1;
   print(golongan.runtimeType);
+
+  // gagal konversi dari String? ke String
+  // String pekerjaanCopy= pekerjaan; 
+
   print(tes);
   print(nama);
   print(usia);
