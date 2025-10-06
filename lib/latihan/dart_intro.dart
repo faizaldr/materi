@@ -9,10 +9,24 @@ void main(){
   double gaji = 5_570_000.0;
   bool aktif = true;
 
+  // null value :
+  String? pekerjaan; // (?) nullable dari fitur null safety flutter
+  // late, terlambah inisialisasi nilai 
+  late String jabatan;
+  jabatan = "Manager";
+  
+  // var, nullable, deklarasi variabel dengan tipe data menyesuaikan inisialisasi pertamanya
+  var golongan;
+  golongan = "IIIa";
+  // fitur auto convert pada var
+  golongan = 1;
+  print(golongan.runtimeType);
   print(tes);
   print(nama);
   print(usia);
   print(gaji);
   print(aktif);
   debugPrint(nama);
+  print(pekerjaan);
+  print(jabatan);
 }
