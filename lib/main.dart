@@ -6,13 +6,17 @@ void main() {
 }
 
 class App extends StatelessWidget {
+  const App({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: HomePage(), );
+    return MaterialApp(home: HomePage());
   }
 }
 
 class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return _HomePageState();
@@ -26,13 +30,13 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(text),),
+      appBar: AppBar(title: Text(text)),
       body: Center(
         child: ElevatedButton(
           onPressed: () {
             setState(() {
               n++;
-              text= "Home";
+              text = "Home";
             });
           },
           child: Text("Angka : ${n}"),
