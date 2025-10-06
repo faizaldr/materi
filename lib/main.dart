@@ -22,14 +22,18 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   var n = 0;
+  var text = "Home Page";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: Text(text),),
       body: Center(
         child: ElevatedButton(
           onPressed: () {
             setState(() {
               n++;
+              text= "Home";
             });
           },
           child: Text("Angka : ${n}"),
