@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:materi/modules/login/pages/login_page.dart';
 
 void main() {
   var app = App();
@@ -10,38 +11,38 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: HomePage());
+    return MaterialApp(home: LoginPage());
   }
 }
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+// class HomePage extends StatefulWidget {
+//   const HomePage({Key? key}) : super(key: key);
 
-  @override
-  State<StatefulWidget> createState() {
-    return _HomePageState();
-  }
-}
+//   @override
+//   State<StatefulWidget> createState() {
+//     return _HomePageState();
+//   }
+// }
 
-class _HomePageState extends State<HomePage> {
-  var n = 0;
-  var text = "Home Page";
+// class _HomePageState extends State<HomePage> {
+//   var n = 0;
+//   var text = "Home Page";
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(text)),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            setState(() {
-              n++;
-              text = "Home";
-            });
-          },
-          child: Text("Angka : ${n}"),
-        ),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(title: Text(text)),
+//       body: Center(
+//         child: ElevatedButton(
+//           onPressed: () {
+//             setState(() {
+//               n++;
+//               text = "Home";
+//             });
+//           },
+//           child: Text("Angka : ${n}"),
+//         ),
+//       ),
+//     );
+//   }
+// }
