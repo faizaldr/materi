@@ -26,6 +26,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
           Container(
+            padding: EdgeInsets.all(20),
             child: ListView(
               children: [
                 Image.asset("assets/images/logo.webp", width: 120, height: 120),
