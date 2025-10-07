@@ -24,6 +24,8 @@ class _LoginPageState extends State<LoginPage> {
   AndroidOptions _getAndroidOptions() =>
       const AndroidOptions(encryptedSharedPreferences: true);
 
+  IOSOptions _getIosOptions() =>
+      const IOSOptions(accessibility: KeychainAccessibility.first_unlock);
   @override
   void initState() {
     super.initState();
@@ -31,7 +33,10 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void initFlutterSecureStorage() async {
-    storage = FlutterSecureStorage(aOptions: _getAndroidOptions());
+    storage = FlutterSecureStorage(
+      aOptions: _getAndroidOptions(),
+      iOptions: _getIosOptions(),
+    );
   }
 
   @override
