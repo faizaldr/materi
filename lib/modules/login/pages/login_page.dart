@@ -11,8 +11,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  TextEditingController username = TextEditingController();
-  TextEditingController password = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController username = TextEditingController();
+  final TextEditingController password = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
       body: Stack(
         children: [
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                 fit: BoxFit.cover,
                 image: NetworkImage(
@@ -29,9 +30,10 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
           ),
-          Container(
-            padding: EdgeInsets.all(20),
+          Padding(
+            padding: const EdgeInsets.all(20),
             child: Form(
+              key: _formKey,
               child: ListView(
                 children: [
                   Image.asset(
@@ -39,17 +41,7 @@ class _LoginPageState extends State<LoginPage> {
                     width: 120,
                     height: 120,
                   ),
-                  Text(
-                    "SISTER for STUDENT\nNEXT-GEN",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                      decoration: TextDecoration.underline,
-                      color: Colors.white,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(height: 100),
+                  const SizedBox(height: 100),
                   TextFormComponent(
                     Icons.mail,
                     "Nama akun anda",
@@ -57,9 +49,9 @@ class _LoginPageState extends State<LoginPage> {
                     false,
                     username,
                     TextInputType.text,
-                    validator: _usernameValidataion,
+                    validator: _usernameValidation,
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   TextFormComponent(
                     Icons.key,
                     "Password Anda",
@@ -68,18 +60,14 @@ class _LoginPageState extends State<LoginPage> {
                     password,
                     TextInputType.text,
                     prefixIcon2: Icons.key_off,
-                    validator: _passwordValidataion,
+                    validator: _passwordValidation,
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: () {
-                      _actionLogin(context);
+                      _actionLogin();
                     },
-                    child: Text("Login"),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.red,
-                      foregroundColor: Colors.white,
-                    ),
+                    child: const Text("Login"),
                   ),
                 ],
               ),
@@ -90,26 +78,30 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  String? _usernameValidataion(String? value) {
+  void _actionLogin() {
+    final form = _formKey.currentState;
+    if (form != null && form.validate()) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Login sukses!')));
+    } else {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Data tidak sesuai!')));
+    }
+  }
+
+  String? _usernameValidation(String? value) {
     if (value == null || value.isEmpty || value.length < 3) {
       return "Username tidak boleh kurang dari 3 karakter";
     }
     return null;
   }
 
-  String? _passwordValidataion(String? value) {
+  String? _passwordValidation(String? value) {
     if (value == null || value.isEmpty || value.length < 3) {
       return "Password tidak boleh kurang dari 3 karakter";
     }
     return null;
-  }
-
-  /*void*/
-  _actionLogin(context) {
-    if (Form.of(context)?.validate() ?? false) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text("Data tidak sesuai")));
-    }
   }
 }
