@@ -3,7 +3,7 @@ import 'package:materi/component/text_form_component.dart';
 import 'package:materi/modules/login/data/login_service.dart';
 import 'package:materi/utils/message.dart';
 import 'package:secure_shared_preferences/secure_shared_preferences.dart';
-
+import 'package:materi/utils/key_list.dart';
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -101,6 +101,11 @@ class _LoginPageState extends State<LoginPage> {
         Message.errorMessage(context, "Gagal Login");
       } else {
         Message.successMessage(context, "Berhasil Login");
+        await _secureSharedPref?.putString(SP_TOKEN, result.jwt!);
+        await _secureSharedPref?.putString(SP_USERNAME, result.jwt!);
+        await _secureSharedPref?.putString(SP_NAME, result.jwt!);
+        await _secureSharedPref?.putString(SP_EMAIL, result.jwt!);
+        await _secureSharedPref?.putString(SP_BIRTH_DATE, result.jwt!);
       }
     } else {
       Message.errorMessage(context, "Data tidak sesuai!");

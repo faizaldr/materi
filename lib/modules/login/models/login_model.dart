@@ -30,6 +30,9 @@ class User {
   String? createdAt;
   String? updatedAt;
   String? publishedAt;
+  String? nim;
+  String? name;
+  String? birthDate;
 
   User(
       {this.id,
@@ -41,7 +44,10 @@ class User {
       this.blocked,
       this.createdAt,
       this.updatedAt,
-      this.publishedAt});
+      this.publishedAt,
+      this.nim,
+      this.name,
+      this.birthDate});
 
   User.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -54,6 +60,9 @@ class User {
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     publishedAt = json['publishedAt'];
+    nim = json['nim'];
+    name = json['name'];
+    birthDate = json['birthDate'];
   }
 
   Map<String, dynamic> toJson() {
@@ -68,6 +77,9 @@ class User {
     data['createdAt'] = this.createdAt;
     data['updatedAt'] = this.updatedAt;
     data['publishedAt'] = this.publishedAt;
+    data['nim'] = this.nim;
+    data['name'] = this.name;
+    data['birthDate'] = this.birthDate;
     return data;
   }
 }
