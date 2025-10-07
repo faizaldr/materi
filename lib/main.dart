@@ -7,7 +7,7 @@ import 'package:materi/utils/secure_storage_utils.dart';
 bool isLogin = false;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SecureStorageUtils.readData(key: SP_TOKEN) != null
+  await SecureStorageUtils.readData(key: SP_TOKEN) != null
       ? isLogin = true
       : isLogin = false;
   var app = App();
