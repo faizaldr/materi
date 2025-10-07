@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:materi/component/text_form_component.dart';
+import 'package:materi/modules/login/data/login_service.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -78,12 +79,16 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void _actionLogin() {
+  void _actionLogin() async {
     final form = _formKey.currentState;
+
     if (form != null && form.validate()) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('Login sukses!')));
+      var result = await actionLoginService(username.text, password.text);
+      if (result == null) {
+      } else {
+
+      }
+
     } else {
       ScaffoldMessenger.of(
         context,
