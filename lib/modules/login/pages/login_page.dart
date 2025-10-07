@@ -86,12 +86,12 @@ class _LoginPageState extends State<LoginPage> {
     if (form != null && form.validate()) {
       var result = await actionLoginService(username.text, password.text);
       if (result == null) {
-        Message.successMessage(context, "Gagal Login");
+        Message.errorMessage(context, "Gagal Login");
       } else {
         Message.successMessage(context, "Berhasil Login");
       }
     } else {
-        Message.successMessage(context, "Data tidak sesuai!");     
+        Message.errorMessage(context, "Data tidak sesuai!");     
     }
   }
 
