@@ -16,11 +16,13 @@ class TextFormComponent extends StatefulWidget {
     this.labelText,
     this.isObsecure,
     this.controller,
-    this.keyboardType, {
+    this.keyboardType, 
+    {
     Key? key,
     this.validator,
     this.prefixIcon2,
-  }) : super(key: key);
+  }
+  ) : super(key: key);
   @override
   State<StatefulWidget> createState() {
     return _TextFormComponentState();
@@ -52,6 +54,7 @@ class _TextFormComponentState extends State<TextFormComponent> {
       controller: widget.controller,
       obscureText: widget.isObsecure,
       keyboardType: widget.keyboardType,
+      validator: widget.validator,
     );
   }
 }
