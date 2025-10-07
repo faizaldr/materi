@@ -10,7 +10,17 @@ class TextFormComponent extends StatefulWidget {
   var keyboardType;
   var validator;
 
-  TextFormComponent({Key? key}) : super(key: key);
+  TextFormComponent(
+    this.prefixIcon1,
+    this.hintText,
+    this.labelText,
+    this.isObsecure,
+    this.controller,
+    this.keyboardType, {
+    Key? key,
+    this.validator,
+    this.prefixIcon2,
+  }) : super(key: key);
   @override
   State<StatefulWidget> createState() {
     return _TextFormComponentState();
