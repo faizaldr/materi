@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:materi/component/text_form_component.dart';
+import 'package:materi/modules/home/page/home_page.dart';
 import 'package:materi/modules/login/data/login_service.dart';
 import 'package:materi/utils/message.dart';
 import 'package:secure_shared_preferences/secure_shared_preferences.dart';
 import 'package:materi/utils/key_list.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -106,6 +108,10 @@ class _LoginPageState extends State<LoginPage> {
         await _secureSharedPref?.putString(SP_NAME, result.jwt!);
         await _secureSharedPref?.putString(SP_EMAIL, result.jwt!);
         await _secureSharedPref?.putString(SP_BIRTH_DATE, result.jwt!);
+
+        Navigator.of(
+          context,
+        ).push(MaterialPageRoute(builder: (context) => HomePage()));
       }
     } else {
       Message.errorMessage(context, "Data tidak sesuai!");
