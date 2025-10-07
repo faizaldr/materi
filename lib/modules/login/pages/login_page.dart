@@ -3,8 +3,8 @@ import 'package:materi/component/text_form_component.dart';
 import 'package:materi/modules/home/page/home_page.dart';
 import 'package:materi/modules/login/data/login_service.dart';
 import 'package:materi/utils/message.dart';
-import 'package:secure_shared_preferences/secure_shared_preferences.dart';
 import 'package:materi/utils/key_list.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -19,16 +19,19 @@ class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController username = TextEditingController();
   final TextEditingController password = TextEditingController();
-  SecureSharedPref? _secureSharedPref;
+  var storage;
+  
+  AndroidOptions _getAndroidOptions() =>
+      const AndroidOptions(encryptedSharedPreferences: true);
 
   @override
   void initState() {
     super.initState();
-    initSharedPreference();
+    initFlutterSecureStorage();
   }
 
-  void initSharedPreference() async {
-    _secureSharedPref = await SecureSharedPref.getInstance();
+  void initFlutterSecureStorage() async {
+    storage = FlutterSecureStorage(aOptions: _getAndroidOptions());
   }
 
   @override
