@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:materi/component/text_form_component.dart';
 import 'package:materi/utils/key_list.dart';
 import 'package:materi/utils/text_formatter.dart';
 
@@ -81,11 +82,47 @@ class _HomePageState extends State<HomePage> {
               ).push(MaterialPageRoute(builder: (context) => HomePage())),
             ),
             ListTile(
+              leading: Icon(Icons.settings),
+              title: Text("CHANGE ACCOUNT"),
+              onTap: () {
+                Navigator.of(context).pop();
+                showDialog(
+                  context: context,
+                  builder: (context) => dialogBuilder(context),
+                );
+              },
+            ),
+            ListTile(
               leading: Icon(Icons.exit_to_app),
               title: Text("LOGOUT"),
               onTap: () {},
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget dialogBuilder(BuildContext context) {
+    var usernameController = TextEditingController();
+    var nameController = TextEditingController();
+    var emailController = TextEditingController();
+    return IntrinsicHeight(
+      child: AlertDialog(
+        title: Text("Change Account"),
+        content: SingleChildScrollView(
+          child: Column(
+            children: [
+              TextFormComponent(
+                Icons.man,
+                "Nama Pengguna Anda",
+                "Username",
+                false,
+                usernameController,
+                TextInputType.name,
+              ),
+            ],
+          ),
         ),
       ),
     );
