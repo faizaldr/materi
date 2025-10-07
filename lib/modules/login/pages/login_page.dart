@@ -31,51 +31,73 @@ class _LoginPageState extends State<LoginPage> {
           ),
           Container(
             padding: EdgeInsets.all(20),
-            child: ListView(
-              children: [
-                Image.asset("assets/images/logo.webp", width: 120, height: 120),
-                Text(
-                  "SISTER for STUDENT\nNEXT-GEN",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                    decoration: TextDecoration.underline,
+            child: Form(
+              child: ListView(
+                children: [
+                  Image.asset(
+                    "assets/images/logo.webp",
+                    width: 120,
+                    height: 120,
                   ),
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(height: 100),
-                TextFormComponent(
-                  Icons.mail,
-                  "Nama akun anda",
-                  "Username",
-                  false,
-                  username,
-                  TextInputType.text,
-                ),
-                SizedBox(height: 20),
-                TextFormComponent(
-                  Icons.key,
-                  "Password Anda",
-                  "Password",
-                  true,
-                  password,
-                  TextInputType.text,
-                  prefixIcon2: Icons.key_off,
-                ),
-                SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: Text("Login"),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red,
-                    foregroundColor: Colors.white,
+                  Text(
+                    "SISTER for STUDENT\nNEXT-GEN",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                      decoration: TextDecoration.underline,
+                      color: Colors.white,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                ),
-              ],
+                  SizedBox(height: 100),
+                  TextFormComponent(
+                    Icons.mail,
+                    "Nama akun anda",
+                    "Username",
+                    false,
+                    username,
+                    TextInputType.text,
+                  ),
+                  SizedBox(height: 20),
+                  TextFormComponent(
+                    Icons.key,
+                    "Password Anda",
+                    "Password",
+                    true,
+                    password,
+                    TextInputType.text,
+                    prefixIcon2: Icons.key_off,
+                  ),
+                  SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: Text("Login"),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red,
+                      foregroundColor: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
       ),
     );
   }
+
+  String? _usernameValidataion(String? value) {
+    if (value == null || value.isEmpty || value.length < 3) {
+      return "Username tidak boleh kurang dari 3 karakter";
+    }
+    return null;
+  }
+
+  String? _passwordValidataion(String? value) {
+        if (value == null || value.isEmpty || value.length < 3) {
+      return "Password tidak boleh kurang dari 3 karakter";
+    }
+    return null;
+  }
+  _actionLogin() {}
 }
