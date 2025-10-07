@@ -57,6 +57,7 @@ class _LoginPageState extends State<LoginPage> {
                     false,
                     username,
                     TextInputType.text,
+                    validator: _usernameValidataion,
                   ),
                   SizedBox(height: 20),
                   TextFormComponent(
@@ -67,10 +68,13 @@ class _LoginPageState extends State<LoginPage> {
                     password,
                     TextInputType.text,
                     prefixIcon2: Icons.key_off,
+                    validator: _passwordValidataion,
                   ),
                   SizedBox(height: 20),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      _actionLogin(context);
+                    },
                     child: Text("Login"),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.red,
