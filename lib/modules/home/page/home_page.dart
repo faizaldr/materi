@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:materi/utils/key_list.dart';
+import 'package:materi/utils/text_formatter.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -11,6 +14,45 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   var text = "Home Page";
+  var username;
+  var name;
+  var email;
+  var birthDate;
+  FlutterSecureStorage? storage;
+
+  AndroidOptions _getAndroidOptions() =>
+      const AndroidOptions(encryptedSharedPreferences: true);
+
+  IOSOptions _getIosOptions() =>
+      const IOSOptions(accessibility: KeychainAccessibility.first_unlock);
+  @override
+  void initState() {
+    super.initState();
+    initDrawer();
+  }
+
+  void initDrawer() async {
+    storage = FlutterSecureStorage(
+      aOptions: _getAndroidOptions(),
+      iOptions: _getIosOptions(),
+    );
+
+    username = await storage!.read(key: SP_TOKEN);
+    name = await storage!.read(key: SP_NAME);
+    email = await storage!.read(key: SP_EMAIL);
+    birthDate = await storage!.read(key: SP_BIRTH_DATE);
+
+    setState(() {
+      username = username;
+      name = name;
+      email = email;
+      birthDate = birthDate;
+    });
+    debugPrint(username);
+    debugPrint(name);
+    debugPrint(email);
+    debugPrint(birthDate);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,11 +63,14 @@ class _HomePageState extends State<HomePage> {
         child: ListView(
           children: [
             UserAccountsDrawerHeader(
-              accountName: Text("contoh"),
-              accountEmail: Text("email"),
+              accountName: Text(name ?? "-"),
+              accountEmail: Text(email ?? "-"),
               currentAccountPicture: CircleAvatar(
                 backgroundColor: Colors.white,
-                child: Text("F", style: TextStyle(fontSize: 24)),
+                child: Text(
+                  getInitialText(name ?? "-"),
+                  style: TextStyle(fontSize: 24),
+                ),
               ),
             ),
             ListTile(
@@ -35,10 +80,10 @@ class _HomePageState extends State<HomePage> {
                 context,
               ).push(MaterialPageRoute(builder: (context) => HomePage())),
             ),
-             ListTile(
+            ListTile(
               leading: Icon(Icons.exit_to_app),
               title: Text("LOGOUT"),
-              onTap: (){}
+              onTap: () {},
             ),
           ],
         ),
