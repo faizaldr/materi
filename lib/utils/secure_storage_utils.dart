@@ -23,7 +23,6 @@ class SecureStorageUtils {
   
   static Future<void> readData({
     required String key,
-    required String value,
   }) async {
     await _storage.read(
       key: key,
