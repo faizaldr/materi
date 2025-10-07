@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:materi/component/text_form_component.dart';
 import 'package:materi/modules/login/data/login_service.dart';
+import 'package:materi/utils/message.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -85,14 +86,12 @@ class _LoginPageState extends State<LoginPage> {
     if (form != null && form.validate()) {
       var result = await actionLoginService(username.text, password.text);
       if (result == null) {
+        Message.successMessage(context, "Gagal Login");
       } else {
-
+        Message.successMessage(context, "Berhasil Login");
       }
-
     } else {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('Data tidak sesuai!')));
+        Message.successMessage(context, "Data tidak sesuai!");     
     }
   }
 
