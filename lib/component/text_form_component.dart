@@ -41,8 +41,8 @@ class _TextFormComponentState extends State<TextFormComponent> {
                   widget.isObsecure = !widget.isObsecure;
                 },
                 icon: widget.isObsecure
-                    ? widget.prefixIcon1
-                    : widget.prefixIcon2,
+                    ? Icon(widget.prefixIcon1)
+                    : Icon(widget.prefixIcon2),
               )),
         hintText: widget.hintText,
         labelText: widget.labelText,

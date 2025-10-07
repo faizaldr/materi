@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:materi/component/text_form_component.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -43,38 +44,23 @@ class _LoginPageState extends State<LoginPage> {
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 100),
-                TextFormField(
-                  decoration: InputDecoration(
-                    prefixIcon: const Icon(Icons.mail),
-                    hintText: "Username",
-                    labelText: "Username",
-                    contentPadding: EdgeInsets.symmetric(
-                      vertical: 10,
-                      horizontal: 20,
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    fillColor: Colors.white,
-                    filled: true,
-                  ),
+                TextFormComponent(
+                  Icons.mail,
+                  "Nama akun anda",
+                  "Username",
+                  false,
+                  username,
+                  TextInputType.text,
                 ),
                 SizedBox(height: 20),
-                TextFormField(
-                  decoration: InputDecoration(
-                    prefixIcon: const Icon(Icons.mail),
-                    hintText: "Kata sandi",
-                    labelText: "Password",
-                    contentPadding: EdgeInsets.symmetric(
-                      vertical: 10,
-                      horizontal: 20,
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    fillColor: Colors.white,
-                    filled: true,
-                  ),
+                TextFormComponent(
+                  Icons.key,
+                  "Password Anda",
+                  "Password",
+                  true,
+                  password,
+                  TextInputType.text,
+                  prefixIcon2: Icons.key_off,
                 ),
                 SizedBox(height: 20),
                 ElevatedButton(
