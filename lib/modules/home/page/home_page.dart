@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
       iOptions: _getIosOptions(),
     );
 
-    username = await storage!.read(key: SP_TOKEN);
+    username = await storage!.read(key: SP_USERNAME);
     name = await storage!.read(key: SP_NAME);
     email = await storage!.read(key: SP_EMAIL);
     birthDate = await storage!.read(key: SP_BIRTH_DATE);
@@ -88,7 +88,8 @@ class _HomePageState extends State<HomePage> {
                 Navigator.of(context).pop();
                 showDialog(
                   context: context,
-                  builder: (context) => dialogBuilder(context),
+                  builder: (context) =>
+                      dialogBuilder(context, username, name, email),
                 );
               },
             ),
@@ -103,10 +104,10 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget dialogBuilder(BuildContext context) {
-    var usernameController = TextEditingController();
-    var nameController = TextEditingController();
-    var emailController = TextEditingController();
+  Widget dialogBuilder(BuildContext context, username, name, email) {
+    var usernameController = TextEditingController(text: username);
+    var nameController = TextEditingController(text: name);
+    var emailController = TextEditingController(text: email);
     return IntrinsicHeight(
       child: AlertDialog(
         title: Text("Change Account"),
@@ -121,9 +122,36 @@ class _HomePageState extends State<HomePage> {
                 usernameController,
                 TextInputType.name,
               ),
+              SizedBox(height: 10),
+              TextFormComponent(
+                Icons.man,
+                "Nama Anda",
+                "Name",
+                false,
+                nameController,
+                TextInputType.name,
+              ),
+              SizedBox(height: 10),
+              TextFormComponent(
+                Icons.man,
+                "Email Anda",
+                "Email",
+                false,
+                emailController,
+                TextInputType.name,
+              ),
             ],
           ),
         ),
+        actions: [
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text("Close"),
+          ),
+          ElevatedButton(onPressed: () {}, child: Text("Save")),
+        ],
       ),
     );
   }
