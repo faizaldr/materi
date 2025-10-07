@@ -20,18 +20,15 @@ class SecureStorageUtils {
       iOptions: _getIosOptions(),
     );
   }
-  
-  static Future<void> readData({
-    required String key,
-  }) async {
-    await _storage.read(
+
+  static Future<String?> readData({required String key}) async {
+    return await _storage.read(
       key: key,
       aOptions: _getAndroidOptions(),
       iOptions: _getIosOptions(),
     );
   }
 
-  
   static Future<void> deleteAllData({
     required String key,
     required String value,
