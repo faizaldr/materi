@@ -1,2 +1,2 @@
-const BASE_URL = "http://localhost:1337/api";
+const BASE_URL = "http://172.19.0.1:1337/api";
 const LOGIN_URL = BASE_URL + "/auth/local";

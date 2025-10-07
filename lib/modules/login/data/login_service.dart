@@ -13,6 +13,7 @@ Future<LoginModel?> actionLoginService(
     identifier: identifier,
     password: password,
   );
+  print(requestLoginModel.identifier);
   final body = requestLoginModel.toJson();
   final response = await http.post(Uri.parse(LOGIN_URL), body: body);
   if (response.statusCode == 200) {
