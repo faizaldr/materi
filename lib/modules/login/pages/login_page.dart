@@ -19,8 +19,8 @@ class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController username = TextEditingController();
   final TextEditingController password = TextEditingController();
-  var storage;
-  
+  FlutterSecureStorage? storage;
+
   AndroidOptions _getAndroidOptions() =>
       const AndroidOptions(encryptedSharedPreferences: true);
 
@@ -106,11 +106,11 @@ class _LoginPageState extends State<LoginPage> {
         Message.errorMessage(context, "Gagal Login");
       } else {
         Message.successMessage(context, "Berhasil Login");
-        await _secureSharedPref?.putString(SP_TOKEN, result.jwt!);
-        await _secureSharedPref?.putString(SP_USERNAME, result.jwt!);
-        await _secureSharedPref?.putString(SP_NAME, result.jwt!);
-        await _secureSharedPref?.putString(SP_EMAIL, result.jwt!);
-        await _secureSharedPref?.putString(SP_BIRTH_DATE, result.jwt!);
+        await storage!.write(key: SP_TOKEN, value: result.jwt!);
+        await storage!.write(key: SP_USERNAME, value: result.user!.username);
+        await storage!.write(key: SP_NAME, value: result.user!.name);
+        await storage!.write(key: SP_EMAIL, value: result.user!.email);
+        await storage!.write(key: SP_BIRTH_DATE, value: result.user!.birthDate);
 
         Navigator.of(
           context,
