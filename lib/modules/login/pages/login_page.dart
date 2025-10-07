@@ -94,10 +94,18 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   String? _passwordValidataion(String? value) {
-        if (value == null || value.isEmpty || value.length < 3) {
+    if (value == null || value.isEmpty || value.length < 3) {
       return "Password tidak boleh kurang dari 3 karakter";
     }
     return null;
   }
-  _actionLogin() {}
+
+  /*void*/
+  _actionLogin(context) {
+    if (Form.of(context)?.validate() ?? false) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Data tidak sesuai")));
+    }
+  }
 }
