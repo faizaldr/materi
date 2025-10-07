@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:materi/component/text_form_component.dart';
 import 'package:materi/modules/login/data/login_service.dart';
 import 'package:materi/utils/message.dart';
+import 'package:secure_shared_preferences/secure_shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -16,6 +17,17 @@ class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController username = TextEditingController();
   final TextEditingController password = TextEditingController();
+  SecureSharedPref? _secureSharedPref;
+
+  @override
+  void initState() {
+    super.initState();
+    initSharedPreference();
+  }
+
+  void initSharedPreference() async {
+    _secureSharedPref = await SecureSharedPref.getInstance();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +103,7 @@ class _LoginPageState extends State<LoginPage> {
         Message.successMessage(context, "Berhasil Login");
       }
     } else {
-        Message.errorMessage(context, "Data tidak sesuai!");     
+      Message.errorMessage(context, "Data tidak sesuai!");
     }
   }
 
