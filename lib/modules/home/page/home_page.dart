@@ -124,7 +124,7 @@ class _HomePageState extends State<HomePage> {
               ),
               SizedBox(height: 10),
               TextFormComponent(
-                Icons.man,
+                Icons.account_box,
                 "Nama Anda",
                 "Name",
                 false,
@@ -133,7 +133,7 @@ class _HomePageState extends State<HomePage> {
               ),
               SizedBox(height: 10),
               TextFormComponent(
-                Icons.man,
+                Icons.email,
                 "Email Anda",
                 "Email",
                 false,
