@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:materi/component/text_form_component.dart';
+import 'package:materi/modules/home/data/home_account_service.dart';
 import 'package:materi/utils/key_list.dart';
+import 'package:materi/utils/message.dart';
+import 'package:materi/utils/secure_storage_utils.dart';
 import 'package:materi/utils/text_formatter.dart';
 
 class HomePage extends StatefulWidget {
@@ -154,5 +157,22 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
     );
+  }
+
+  _actionUpdateAccount(username, name, email) async {
+    var result = await actionUpdateAccountService(username, name, email);
+    if (result == null) {
+      Message.errorMessage(context, "Update Account");
+    } else {
+      Message.successMessage(context, "Berhasil Update Account");
+      await SecureStorageUtils.saveData(key: SP_USERNAME, value: username);
+      await SecureStorageUtils.saveData(key: SP_NAME, value: name);
+      await SecureStorageUtils.saveData(key: SP_EMAIL, value: email);
+      setState(() {
+        this.username = username;
+        this.email = email;
+        this.name = name;
+      });
+    }
   }
 }
