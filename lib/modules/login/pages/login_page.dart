@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:materi/component/text_form_component.dart';
-import 'package:materi/modules/home/page/home_page.dart';
+import 'package:materi/modules/home/pages/home_page.dart';
 import 'package:materi/modules/login/data/login_service.dart';
 import 'package:materi/utils/message.dart';
 import 'package:materi/utils/key_list.dart';

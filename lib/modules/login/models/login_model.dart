@@ -33,21 +33,24 @@ class User {
   String? nim;
   String? name;
   String? birthDate;
+  String? password;
 
-  User(
-      {this.id,
-      this.documentId,
-      this.username,
-      this.email,
-      this.provider,
-      this.confirmed,
-      this.blocked,
-      this.createdAt,
-      this.updatedAt,
-      this.publishedAt,
-      this.nim,
-      this.name,
-      this.birthDate});
+
+  User({
+    this.id,
+    this.documentId,
+    this.username,
+    this.email,
+    this.provider,
+    this.confirmed,
+    this.blocked,
+    this.createdAt,
+    this.updatedAt,
+    this.publishedAt,
+    this.nim,
+    this.name,
+    this.birthDate,
+  });
 
   User.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -67,19 +70,12 @@ class User {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['documentId'] = this.documentId;
-    data['username'] = this.username;
-    data['email'] = this.email;
-    data['provider'] = this.provider;
-    data['confirmed'] = this.confirmed;
-    data['blocked'] = this.blocked;
-    data['createdAt'] = this.createdAt;
-    data['updatedAt'] = this.updatedAt;
-    data['publishedAt'] = this.publishedAt;
-    data['nim'] = this.nim;
-    data['name'] = this.name;
-    data['birthDate'] = this.birthDate;
+    if (this.username != null) data['username'] = this.username;
+    if (this.email != null) data['email'] = this.email;
+    if (this.password != null) data['password'] = this.password;
+    if (this.nim != null) data['nim'] = this.nim;
+    if (this.name != null) data['name'] = this.name;
+    if (this.birthDate != null) data['birthDate'] = this.birthDate;
     return data;
   }
 }
