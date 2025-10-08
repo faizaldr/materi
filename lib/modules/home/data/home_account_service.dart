@@ -11,10 +11,11 @@ Future<User?> actionUpdateAccountService(
   String? name,
   String? email,
 ) async {
-  final User user = User(username: username, name: name, email: email);
+  final User user = 
+    User(username: username, name: name, email: email);
   final body = user.toJson();
   final token = await SecureStorageUtils.readData(key: SP_TOKEN);
-  final headers = {'authorization': 'Bearer $token'};
+  final headers = {'Authorization': 'Bearer $token'};
   final response = await http.put(
     Uri.parse(UPDATE_ACCOUNT_URL),
     headers: headers,
