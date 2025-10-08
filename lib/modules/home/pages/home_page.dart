@@ -144,7 +144,11 @@ class _HomePageState extends State<HomePage> {
       "https://d12grbvu52tm8q.cloudfront.net/AHI/Compro/d83d7fd4-61ea-46b3-81ff-e0692e126271.jpg",
       "https://d12grbvu52tm8q.cloudfront.net/AHI/Compro/d83d7fd4-61ea-46b3-81ff-e0692e126271.jpg",
     ];
-    CarouselOptions options = CarouselOptions();
+    CarouselOptions options = CarouselOptions(
+      autoPlay: true,
+      autoPlayAnimationDuration: Duration(seconds: 1),
+      reverse: true
+    );
     return SizedBox(
       height: 200,
       child: CarouselSlider(
