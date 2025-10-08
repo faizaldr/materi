@@ -81,6 +81,20 @@ class _HomePageState extends State<HomePage> {
         padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
         child: ListView(
           children: [
+            TextFormField(
+              decoration: InputDecoration(
+                prefixIcon: IconButton(
+                  icon: Icon(Icons.search),
+                  onPressed: () {},
+                ),
+                suffixIcon: IconButton(icon: Icon(Icons.mic), onPressed: () {}),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                hint: Text("Search"),
+              ),
+            ),
+            SizedBox(height: 20),
             _listViewPromo(context),
             SizedBox(height: 20),
             Row(
@@ -90,6 +104,9 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
             _listViewCategory(context),
+            SizedBox(height: 20),
+            Text("Most Popular 🔥"),
+            _gridViewPopular(context),
           ],
         ),
       ),
@@ -143,7 +160,7 @@ class _HomePageState extends State<HomePage> {
     var url = [
       "https://d12grbvu52tm8q.cloudfront.net/AHI/Compro/d83d7fd4-61ea-46b3-81ff-e0692e126271.jpg",
       "https://www.bankbsi.co.id/storage/promos/rc7Ijih94cMSRq2WewhFnPdE5AFZBE6Lm1fImvIy.jpg",
-      "https://news.codashop.com/id/wp-content/uploads/sites/4/2022/04/Telkomsel-Bonus-Kuota-Banner-696x267.jpg"
+      "https://news.codashop.com/id/wp-content/uploads/sites/4/2022/04/Telkomsel-Bonus-Kuota-Banner-696x267.jpg",
     ];
     CarouselOptions options = CarouselOptions(
       autoPlay: true,
@@ -181,7 +198,7 @@ class _HomePageState extends State<HomePage> {
       {"icon": Icons.account_balance_wallet_rounded, "text": "Kampus"},
     ];
     return SizedBox(
-      height: 200,
+      height: 100,
       child: ListView.builder(
         itemCount: item.length,
         scrollDirection: Axis.horizontal,
@@ -189,6 +206,56 @@ class _HomePageState extends State<HomePage> {
           padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
           child: Column(
             children: [Icon(item[index]["icon"]), Text(item[index]["text"])],
+          ),
+        ),
+      ),
+    );
+  }
+
+  _gridViewPopular(context) {
+    List<Map<String, dynamic>> item = [
+      {
+        "url":
+            "https://scontent.fjog3-1.fna.fbcdn.net/v/t39.30808-6/462513075_2723923894445597_2986586797287622815_n.png?stp=dst-png_p526x296&_nc_cat=107&ccb=1-7&_nc_sid=0b6b33&_nc_ohc=gNPitVmxttkQ7kNvwEH8m6-&_nc_oc=AdlDU8VtuAll0v-p-ouLEPN7Et99tbeP2Tsdfz39SRrZOG0hFkN8T9q-4aHcFUFxvd4&_nc_zt=23&_nc_ht=scontent.fjog3-1.fna&_nc_gid=X_s2NVqLDINaNLR_QZHYRw&oh=00_Aff0tLHDCXIQ6tu95g677zicW0xwukMcDXqiIF31TuLJog&oe=68EBD05A",
+        "text": "Air Minum 600 ml",
+      },
+      {
+        "url":
+            "https://scontent.fjog3-1.fna.fbcdn.net/v/t39.30808-6/462513075_2723923894445597_2986586797287622815_n.png?stp=dst-png_p526x296&_nc_cat=107&ccb=1-7&_nc_sid=0b6b33&_nc_ohc=gNPitVmxttkQ7kNvwEH8m6-&_nc_oc=AdlDU8VtuAll0v-p-ouLEPN7Et99tbeP2Tsdfz39SRrZOG0hFkN8T9q-4aHcFUFxvd4&_nc_zt=23&_nc_ht=scontent.fjog3-1.fna&_nc_gid=X_s2NVqLDINaNLR_QZHYRw&oh=00_Aff0tLHDCXIQ6tu95g677zicW0xwukMcDXqiIF31TuLJog&oe=68EBD05A",
+        "text": "Air Minum 300 ml",
+      },
+    ];
+
+    var gridDelegate = SliverGridDelegateWithFixedCrossAxisCount(
+      crossAxisCount: 2,
+      crossAxisSpacing: 10,
+      mainAxisSpacing: 10,
+    );
+
+    return SizedBox(
+      height: 250,
+      child: GridView.builder(
+        itemCount: item.length,
+        gridDelegate: gridDelegate,
+        itemBuilder: (context, index) => Card(
+          elevation: 4, //shadow effect
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                child: CachedNetworkImage(
+                  imageUrl: item[index]["url"],
+                ),
+              ),
+              SizedBox(height: 8),
+              Container(
+                height: 20,
+                child: Text(
+                  item[index]["text"],
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
           ),
         ),
       ),
