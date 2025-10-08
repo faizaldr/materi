@@ -6,7 +6,7 @@ import 'package:materi/utils/key_list.dart';
 import 'package:materi/utils/url_list.dart';
 import 'package:materi/utils/secure_storage_utils.dart';
 
-Future<User?> actionUpdateAccount(
+Future<User?> actionUpdateAccountService(
   String? username,
   String? name,
   String? email,
