@@ -1,3 +1,5 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -80,7 +82,7 @@ class _HomePageState extends State<HomePage> {
         child: ListView(
           children: [
             _listViewPromo(context),
-            SizedBox(height: 20,),
+            SizedBox(height: 20),
             Row(
               children: [
                 Expanded(child: Text("Category")),
@@ -142,20 +144,35 @@ class _HomePageState extends State<HomePage> {
       "https://d12grbvu52tm8q.cloudfront.net/AHI/Compro/d83d7fd4-61ea-46b3-81ff-e0692e126271.jpg",
       "https://d12grbvu52tm8q.cloudfront.net/AHI/Compro/d83d7fd4-61ea-46b3-81ff-e0692e126271.jpg",
     ];
+    CarouselOptions options = CarouselOptions();
     return SizedBox(
       height: 200,
-      child: ListView.builder(
-        itemCount: url.length,
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (context, index) => Card(child: Image.network(url[index])),
+      child: CarouselSlider(
+        options: options,
+        items: url
+            .map(
+              (i) => Container(
+                width: MediaQuery.of(context).size.width,
+                margin: EdgeInsets.symmetric(horizontal: 5),
+                decoration: BoxDecoration(color: Colors.white60),
+                child: CachedNetworkImage(
+                  imageUrl: i,
+                  placeholder: (context, url) => Container(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
+                ), //i sebagai value
+              ),
+            )
+            .toList(),
       ),
     );
   }
 
   _listViewCategory(context) {
     List<Map<String, dynamic>> item = [
-      {"icon": Icons.account_balance_wallet_rounded, "text": "Kampus"},
-      {"icon": Icons.account_balance_wallet_rounded, "text": "Kampus"},
       {"icon": Icons.account_balance_wallet_rounded, "text": "Kampus"},
       {"icon": Icons.account_balance_wallet_rounded, "text": "Kampus"},
     ];
