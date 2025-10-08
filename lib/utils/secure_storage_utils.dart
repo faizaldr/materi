@@ -29,10 +29,7 @@ class SecureStorageUtils {
     );
   }
 
-  static Future<void> deleteAllData({
-    required String key,
-    required String value,
-  }) async {
+  static Future<void> deleteAllData() async {
     await _storage.deleteAll(
       aOptions: _getAndroidOptions(),
       iOptions: _getIosOptions(),

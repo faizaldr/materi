@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:materi/component/text_form_component.dart';
 import 'package:materi/modules/home/data/home_account_service.dart';
+import 'package:materi/modules/login/pages/login_page.dart';
 import 'package:materi/utils/key_list.dart';
 import 'package:materi/utils/message.dart';
 import 'package:materi/utils/secure_storage_utils.dart';
@@ -99,7 +100,9 @@ class _HomePageState extends State<HomePage> {
             ListTile(
               leading: Icon(Icons.exit_to_app),
               title: Text("LOGOUT"),
-              onTap: () {},
+              onTap: () {
+                _actionLogOut(context);
+              },
             ),
           ],
         ),
@@ -184,5 +187,10 @@ class _HomePageState extends State<HomePage> {
       });
       Navigator.of(context).pop();
     }
+  }
+
+  _actionLogOut(context) async{
+    await SecureStorageUtils.deleteAllData();
+    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>LoginPage()));
   }
 }
