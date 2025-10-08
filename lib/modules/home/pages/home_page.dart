@@ -153,7 +153,16 @@ class _HomePageState extends State<HomePage> {
             },
             child: Text("Close"),
           ),
-          ElevatedButton(onPressed: () {}, child: Text("Save")),
+          ElevatedButton(
+            onPressed: () {
+              _actionUpdateAccount(
+                usernameController.text,
+                nameController.text,
+                emailController.text,
+              );
+            },
+            child: Text("Save"),
+          ),
         ],
       ),
     );
