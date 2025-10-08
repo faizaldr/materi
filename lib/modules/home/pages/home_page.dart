@@ -35,10 +35,62 @@ class _HomePageState extends State<HomePage> {
 
   IOSOptions _getIosOptions() =>
       const IOSOptions(accessibility: KeychainAccessibility.first_unlock);
+
   @override
   void initState() {
     super.initState();
     initDrawer();
+  }
+
+  Widget _currentBody() {
+    switch (_pageIndex) {
+      case 0:
+        return _bodyMain();
+      case 1:
+        return Container(child: Center(child: Text("Info")));
+      case 2:
+        return Container(child: Center(child: Text("Danger")));
+      case 3:
+        return Container(child: Center(child: Text("Warning")));
+      default:
+        return _bodyMain();
+    }
+  }
+
+  Widget _bodyMain() {
+    return Container(
+      padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+      child: ListView(
+        children: [
+          TextFormField(
+            decoration: InputDecoration(
+              prefixIcon: IconButton(
+                icon: Icon(Icons.search),
+                onPressed: () {},
+              ),
+              suffixIcon: IconButton(icon: Icon(Icons.mic), onPressed: () {}),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(30),
+              ),
+              hint: Text("Search"),
+            ),
+          ),
+          SizedBox(height: 20),
+          _listViewPromo(context),
+          SizedBox(height: 20),
+          Row(
+            children: [
+              Expanded(child: Text("Category")),
+              Expanded(child: Text("Show All", textAlign: TextAlign.right)),
+            ],
+          ),
+          _listViewCategory(context),
+          SizedBox(height: 20),
+          Text("Most Popular 🔥"),
+          _gridViewPopular(context),
+        ],
+      ),
+    );
   }
 
   void initDrawer() async {
@@ -77,39 +129,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body: Container(
-        padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-        child: ListView(
-          children: [
-            TextFormField(
-              decoration: InputDecoration(
-                prefixIcon: IconButton(
-                  icon: Icon(Icons.search),
-                  onPressed: () {},
-                ),
-                suffixIcon: IconButton(icon: Icon(Icons.mic), onPressed: () {}),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                hint: Text("Search"),
-              ),
-            ),
-            SizedBox(height: 20),
-            _listViewPromo(context),
-            SizedBox(height: 20),
-            Row(
-              children: [
-                Expanded(child: Text("Category")),
-                Expanded(child: Text("Show All", textAlign: TextAlign.right)),
-              ],
-            ),
-            _listViewCategory(context),
-            SizedBox(height: 20),
-            Text("Most Popular 🔥"),
-            _gridViewPopular(context),
-          ],
-        ),
-      ),
+      body: _currentBody(),
       drawer: Drawer(
         child: ListView(
           children: [
@@ -282,7 +302,7 @@ class _HomePageState extends State<HomePage> {
       selectedItemColor: Colors.black,
       unselectedItemColor: Colors.grey,
       backgroundColor: Colors.white,
-      showSelectedLabels: true,
+      showUnselectedLabels: true,
       selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
       currentIndex: _pageIndex,
       onTap: _changePage,
