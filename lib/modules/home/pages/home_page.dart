@@ -142,12 +142,12 @@ class _HomePageState extends State<HomePage> {
   _listViewPromo(context) {
     var url = [
       "https://d12grbvu52tm8q.cloudfront.net/AHI/Compro/d83d7fd4-61ea-46b3-81ff-e0692e126271.jpg",
-      "https://d12grbvu52tm8q.cloudfront.net/AHI/Compro/d83d7fd4-61ea-46b3-81ff-e0692e126271.jpg",
+      "https://www.bankbsi.co.id/storage/promos/rc7Ijih94cMSRq2WewhFnPdE5AFZBE6Lm1fImvIy.jpg",
+      "https://news.codashop.com/id/wp-content/uploads/sites/4/2022/04/Telkomsel-Bonus-Kuota-Banner-696x267.jpg"
     ];
     CarouselOptions options = CarouselOptions(
       autoPlay: true,
       autoPlayAnimationDuration: Duration(seconds: 1),
-      reverse: true
     );
     return SizedBox(
       height: 200,
@@ -158,7 +158,7 @@ class _HomePageState extends State<HomePage> {
               (i) => Container(
                 width: MediaQuery.of(context).size.width,
                 margin: EdgeInsets.symmetric(horizontal: 5),
-                decoration: BoxDecoration(color: Colors.white60),
+                decoration: BoxDecoration(color: Colors.white),
                 child: CachedNetworkImage(
                   imageUrl: i,
                   placeholder: (context, url) => Container(
