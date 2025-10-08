@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:materi/component/text_form_component.dart';
 import 'package:materi/modules/home/data/home_account_service.dart';
@@ -64,8 +65,32 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(text)),
-      body: Center(),
+      appBar: AppBar(
+        title: Text(text),
+        centerTitle: true,
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.notifications_outlined, color: Colors.black),
+          ),
+        ],
+      ),
+      body: Container(
+        padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+        child: ListView(
+          children: [
+            _listViewPromo(context),
+            SizedBox(height: 20,),
+            Row(
+              children: [
+                Expanded(child: Text("Category")),
+                Expanded(child: Text("Show All", textAlign: TextAlign.right)),
+              ],
+            ),
+            _listViewCategory(context),
+          ],
+        ),
+      ),
       drawer: Drawer(
         child: ListView(
           children: [
@@ -107,6 +132,43 @@ class _HomePageState extends State<HomePage> {
               },
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  _listViewPromo(context) {
+    var url = [
+      "https://d12grbvu52tm8q.cloudfront.net/AHI/Compro/d83d7fd4-61ea-46b3-81ff-e0692e126271.jpg",
+      "https://d12grbvu52tm8q.cloudfront.net/AHI/Compro/d83d7fd4-61ea-46b3-81ff-e0692e126271.jpg",
+    ];
+    return SizedBox(
+      height: 200,
+      child: ListView.builder(
+        itemCount: url.length,
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (context, index) => Card(child: Image.network(url[index])),
+      ),
+    );
+  }
+
+  _listViewCategory(context) {
+    List<Map<String, dynamic>> item = [
+      {"icon": Icons.account_balance_wallet_rounded, "text": "Kampus"},
+      {"icon": Icons.account_balance_wallet_rounded, "text": "Kampus"},
+      {"icon": Icons.account_balance_wallet_rounded, "text": "Kampus"},
+      {"icon": Icons.account_balance_wallet_rounded, "text": "Kampus"},
+    ];
+    return SizedBox(
+      height: 200,
+      child: ListView.builder(
+        itemCount: item.length,
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (context, index) => Container(
+          padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
+          child: Column(
+            children: [Icon(item[index]["icon"]), Text(item[index]["text"])],
+          ),
         ),
       ),
     );
