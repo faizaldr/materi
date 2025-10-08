@@ -153,6 +153,7 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
+      bottomNavigationBar: _bottomNavigationBar(),
     );
   }
 
@@ -224,6 +225,16 @@ class _HomePageState extends State<HomePage> {
             "https://scontent.fjog3-1.fna.fbcdn.net/v/t39.30808-6/462513075_2723923894445597_2986586797287622815_n.png?stp=dst-png_p526x296&_nc_cat=107&ccb=1-7&_nc_sid=0b6b33&_nc_ohc=gNPitVmxttkQ7kNvwEH8m6-&_nc_oc=AdlDU8VtuAll0v-p-ouLEPN7Et99tbeP2Tsdfz39SRrZOG0hFkN8T9q-4aHcFUFxvd4&_nc_zt=23&_nc_ht=scontent.fjog3-1.fna&_nc_gid=X_s2NVqLDINaNLR_QZHYRw&oh=00_Aff0tLHDCXIQ6tu95g677zicW0xwukMcDXqiIF31TuLJog&oe=68EBD05A",
         "text": "Air Minum 300 ml",
       },
+      {
+        "url":
+            "https://scontent.fjog3-1.fna.fbcdn.net/v/t39.30808-6/462513075_2723923894445597_2986586797287622815_n.png?stp=dst-png_p526x296&_nc_cat=107&ccb=1-7&_nc_sid=0b6b33&_nc_ohc=gNPitVmxttkQ7kNvwEH8m6-&_nc_oc=AdlDU8VtuAll0v-p-ouLEPN7Et99tbeP2Tsdfz39SRrZOG0hFkN8T9q-4aHcFUFxvd4&_nc_zt=23&_nc_ht=scontent.fjog3-1.fna&_nc_gid=X_s2NVqLDINaNLR_QZHYRw&oh=00_Aff0tLHDCXIQ6tu95g677zicW0xwukMcDXqiIF31TuLJog&oe=68EBD05A",
+        "text": "Air Minum 300 ml",
+      },
+      {
+        "url":
+            "https://scontent.fjog3-1.fna.fbcdn.net/v/t39.30808-6/462513075_2723923894445597_2986586797287622815_n.png?stp=dst-png_p526x296&_nc_cat=107&ccb=1-7&_nc_sid=0b6b33&_nc_ohc=gNPitVmxttkQ7kNvwEH8m6-&_nc_oc=AdlDU8VtuAll0v-p-ouLEPN7Et99tbeP2Tsdfz39SRrZOG0hFkN8T9q-4aHcFUFxvd4&_nc_zt=23&_nc_ht=scontent.fjog3-1.fna&_nc_gid=X_s2NVqLDINaNLR_QZHYRw&oh=00_Aff0tLHDCXIQ6tu95g677zicW0xwukMcDXqiIF31TuLJog&oe=68EBD05A",
+        "text": "Air Minum 300 ml",
+      },
     ];
 
     var gridDelegate = SliverGridDelegateWithFixedCrossAxisCount(
@@ -233,7 +244,7 @@ class _HomePageState extends State<HomePage> {
     );
 
     return SizedBox(
-      height: 250,
+      height: 500,
       child: GridView.builder(
         itemCount: item.length,
         gridDelegate: gridDelegate,
@@ -242,11 +253,7 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Expanded(
-                child: CachedNetworkImage(
-                  imageUrl: item[index]["url"],
-                ),
-              ),
+              Expanded(child: CachedNetworkImage(imageUrl: item[index]["url"])),
               SizedBox(height: 8),
               Container(
                 height: 20,
@@ -260,6 +267,40 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+
+  var _pageIndex = 0;
+  _bottomNavigationBar() {
+    List<Map<String, dynamic>> item = [
+      {"icon": Icons.home, "text": "Home"},
+      {"icon": Icons.info, "text": "About"},
+      {"icon": Icons.warning, "text": "Warning"},
+      {"icon": Icons.dangerous, "text": "Dangerous"},
+    ];
+    // BottomNavigationBar 2 s/d 4
+    return BottomNavigationBar(
+      selectedItemColor: Colors.black,
+      unselectedItemColor: Colors.grey,
+      backgroundColor: Colors.white,
+      showSelectedLabels: true,
+      selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
+      currentIndex: _pageIndex,
+      onTap: _changePage,
+      items: item
+          .map(
+            (i) => BottomNavigationBarItem(
+              icon: Icon(i["icon"]),
+              label: i["text"],
+            ),
+          )
+          .toList(),
+    );
+  }
+
+  _changePage(value) {
+    setState(() {
+      _pageIndex = value;
+    });
   }
 
   Widget dialogBuilder(BuildContext context, username, name, email) {
