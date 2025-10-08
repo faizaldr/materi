@@ -7,6 +7,8 @@ import 'package:materi/utils/key_list.dart';
 import 'package:materi/utils/message.dart';
 import 'package:materi/utils/secure_storage_utils.dart';
 import 'package:materi/utils/text_formatter.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -174,9 +176,17 @@ class _HomePageState extends State<HomePage> {
   _actionUpdateAccount(username, name, email) async {
     var result = await actionUpdateAccountService(username, name, email);
     if (result == null) {
-      Message.errorMessage(context, "Gagal Update Account");
+      // Message.errorMessage(context, "Gagal Update Account");
+      showTopSnackBar(
+        Overlay.of(context),
+        CustomSnackBar.error(message: "Gagal Update Account"),
+      );
     } else {
-      Message.successMessage(context, "Berhasil Update Account");
+      // Message.successMessage(context, "Berhasil Update Account");
+      showTopSnackBar(
+        Overlay.of(context),
+        CustomSnackBar.info(message: "Berhasil Update Account"),
+      );
       await SecureStorageUtils.saveData(key: SP_USERNAME, value: username);
       await SecureStorageUtils.saveData(key: SP_NAME, value: name);
       await SecureStorageUtils.saveData(key: SP_EMAIL, value: email);
@@ -189,8 +199,11 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  _actionLogOut(context) async{
+  _actionLogOut(context) async {
     await SecureStorageUtils.deleteAllData();
-    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>LoginPage()));
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (context) => LoginPage()));
+    Message.successMessage(context, "Selamat Datang Kembali");
   }
 }
