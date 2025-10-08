@@ -171,7 +171,7 @@ class _HomePageState extends State<HomePage> {
   _actionUpdateAccount(username, name, email) async {
     var result = await actionUpdateAccountService(username, name, email);
     if (result == null) {
-      Message.errorMessage(context, "Update Account");
+      Message.errorMessage(context, "Gagal Update Account");
     } else {
       Message.successMessage(context, "Berhasil Update Account");
       await SecureStorageUtils.saveData(key: SP_USERNAME, value: username);
@@ -182,6 +182,7 @@ class _HomePageState extends State<HomePage> {
         this.email = email;
         this.name = name;
       });
+      Navigator.of(context).pop();
     }
   }
 }
