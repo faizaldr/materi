@@ -47,11 +47,11 @@ class _HomePageState extends State<HomePage> {
       case 0:
         return _bodyMain();
       case 1:
-        return Container(child: Center(child: Text("Info")));
+        return Container(child: Center(child: Text("Alert")));
       case 2:
-        return Container(child: Center(child: Text("Danger")));
-      case 3:
         return Container(child: Center(child: Text("Warning")));
+      case 3:
+        return Container(child: Center(child: Text("Danger")));
       default:
         return _bodyMain();
     }
