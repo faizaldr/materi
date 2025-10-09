@@ -11,7 +11,7 @@ class AddressPage extends StatefulWidget {
 
 class _AddressPageState extends State<AddressPage> {
   int _indexPage = 1;
-  int _maxIndexPage = 1; // pastikan ini total halaman (pageCount), bukan pageSize
+  int _maxIndexPage = 1; 
   final List<Data> _addressList = [];
 
   final RefreshController _refreshController =
@@ -32,7 +32,6 @@ class _AddressPageState extends State<AddressPage> {
         _addressList
           ..clear()
           ..addAll(result.data ?? []);
-        // Sesuaikan dengan struktur meta API kamu:
         _maxIndexPage = result.meta?.pagination?.pageCount ??
                         result.meta?.pagination?.page ??
                         1;
@@ -42,21 +41,17 @@ class _AddressPageState extends State<AddressPage> {
     }
   }
 
-  // ============== PULL-DOWN (REFRESH DARI ATAS) ==============
   Future<void> _onPullDown() async {
     try {
       await _loadFirstPage();
-      _refreshController.refreshCompleted(); // akhiri animasi refresh
-      // Jika masih ada halaman selanjutnya, reset footer agar bisa load lagi
+      _refreshController.refreshCompleted();
       _refreshController.resetNoData();
     } catch (e) {
       _refreshController.refreshFailed();
     }
   }
 
-  // ============== PULL-UP (LOAD MORE DARI BAWAH) ==============
   Future<void> _onPullUp() async {
-    // Habis? tandai footer no data
     if (_indexPage >= _maxIndexPage) {
       _refreshController.loadNoData();
       Message.errorMessage(context, "Data sudah habis");
@@ -75,14 +70,14 @@ class _AddressPageState extends State<AddressPage> {
       });
 
       if (_indexPage >= _maxIndexPage) {
-        _refreshController.loadNoData(); // tidak ada halaman lagi
+        _refreshController.loadNoData(); 
       } else {
-        _refreshController.loadComplete(); // sukses, masih bisa load lagi
+        _refreshController.loadComplete(); 
       }
     } catch (e) {
       _refreshController.loadFailed();
       if (mounted) {
-        _indexPage = (_indexPage > 1) ? _indexPage - 1 : 1; // rollback jika gagal
+        _indexPage = (_indexPage > 1) ? _indexPage - 1 : 1;
       }
     }
   }
@@ -99,10 +94,10 @@ class _AddressPageState extends State<AddressPage> {
       appBar: AppBar(title: const Text("Daftar Alamat"), centerTitle: true),
       body: SmartRefresher(
         controller: _refreshController,
-        enablePullDown: true,   // ← aktifkan pull-down (refresh)
-        enablePullUp: true,     // ← aktifkan pull-up (load more)
-        onRefresh: _onPullDown, // ← ini PULL DOWN
-        onLoading: _onPullUp,   // ← ini PULL UP
+        enablePullDown: true,  
+        enablePullUp: true,     
+        onRefresh: _onPullDown,
+        onLoading: _onPullUp,  
         child: ListView.builder(
           physics: const AlwaysScrollableScrollPhysics(),
           itemCount: _addressList.length,
