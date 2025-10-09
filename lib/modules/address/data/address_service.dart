@@ -6,7 +6,7 @@ import 'package:materi/utils/key_list.dart';
 import 'package:materi/utils/secure_storage_utils.dart';
 import 'package:materi/utils/url_list.dart';
 
-Future<Data?> actionGetAddressService(int indexPage) async {
+Future<AddressModel?> actionGetAddressService(int indexPage) async {
   final paginationSize = 2;
   final urlParams =
       "?pagination[page]=${indexPage}&pagination[pageSize]=${paginationSize}";
@@ -18,7 +18,7 @@ Future<Data?> actionGetAddressService(int indexPage) async {
   );
   if (response.statusCode == 200) {
     final jsonData = jsonDecode(response.body);
-    final data = Data.fromJson(jsonData);
+    final data = AddressModel.fromJson(jsonData);
     return data;
   }
   return null;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:materi/modules/address/pages/address_page.dart';
 import 'package:materi/modules/home/pages/home_page.dart';
 import 'package:materi/modules/login/pages/login_page.dart';
 import 'package:materi/utils/key_list.dart';
@@ -19,6 +20,6 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: isLogin ? HomePage() : LoginPage());
+    return MaterialApp(home: isLogin ? AddressPage() : LoginPage());
   }
 }
