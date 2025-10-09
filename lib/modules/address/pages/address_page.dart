@@ -17,17 +17,17 @@ class _AddressPageState extends State<AddressPage> {
   final ScrollController _scrollController = ScrollController();
   bool _isLoading = false;
 
+    void _onScroll() {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
+      _appendData(context);
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     _initData();
-    _scrollController.addListener(() {
-      if (_scrollController.position.pixels >=
-              _scrollController.position.maxScrollExtent - 200 &&
-          !_isLoading) {
-        _appendData(context);
-      }
-    });
   }
 
   @override
@@ -60,17 +60,21 @@ class _AddressPageState extends State<AddressPage> {
     }
   }
 
-  _onRefresh() {
+  Future<void> _onRefresh() async {
+    _isLoading = true;
     _appendData(context);
+    _isLoading = false;
   }
 
   @override
   Widget build(BuildContext context) {
+    _scrollController.addListener(_onScroll);
     return Scaffold(
       appBar: AppBar(title: Text("Daftar Alamat"), centerTitle: true),
       body: RefreshIndicator(
         child: ListView.builder(
           controller: _scrollController,
+          physics: const AlwaysScrollableScrollPhysics(),
           itemCount: _addressList!.length,
           itemBuilder: (context, index) => Padding(
             padding: EdgeInsetsGeometry.fromLTRB(5, 0, 5, 0),
