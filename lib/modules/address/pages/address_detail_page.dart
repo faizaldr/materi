@@ -104,16 +104,18 @@ class _AddressDetailPageState extends State<AddressDetailPage> {
                 Builder(
                   builder: (context) {
                     final latlon = context.watch<LatLon>();
+                    _latitude = latlon.latitude;
+                    _longitude = latlon.longitude;
                     return ListTile(
                       leading: Icon(Icons.gps_fixed),
                       title: Text("${latlon.latitude} | ${latlon.longitude}"),
                     );
                   },
                 ),
-                // ElevatedButton(
-                //   onPressed: _actionSaveAddress,
-                //   child: Text("Simpan"),
-                // ),
+                ElevatedButton(
+                  onPressed: _actionSaveAddress,
+                  child: Text("Simpan"),
+                ),
               ],
             ),
           ),
