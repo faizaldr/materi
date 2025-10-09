@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:materi/modules/address/data/address_service.dart';
 import 'package:materi/modules/address/models/address_model.dart';
+import 'package:materi/modules/address/pages/address_detail_page.dart';
 import 'package:materi/utils/message.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -95,7 +96,11 @@ class _AddressPageState extends State<AddressPage> {
     return Scaffold(
       appBar: AppBar(title: const Text("Daftar Alamat"), centerTitle: true),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(
+            context,
+          ).push(MaterialPageRoute(builder: (context) => AddressDetailPage()));
+        },
         child: Icon(Icons.add),
       ),
       body: Column(
