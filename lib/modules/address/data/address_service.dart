@@ -59,7 +59,6 @@ Future<bool> actionSaveAddressService(
 }
 
 Future<bool> actionDeleteAddressService(String documentId) async {
-  print(documentId);
   final token = await SecureStorageUtils.readData(key: SP_TOKEN);
   final headers = {
     'Authorization': 'Bearer $token',
