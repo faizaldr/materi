@@ -135,47 +135,85 @@ class _AddressPageState extends State<AddressPage> {
                 itemCount: _addressList.length,
                 itemBuilder: (context, index) {
                   final item = _addressList[index];
-                  return Padding(
-                    padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => AddressDetailPage(data: item),
-                          ),
+                  return Dismissible(
+                    key: Key(item.documentId!),
+                    direction: DismissDirection.horizontal,
+                    onDismissed: (direction) async {
+                      final removed = item;
+                      final removedIndex = index;
+
+                      if (!mounted) return;
+                      setState(() {
+                        _addressList.removeAt(removedIndex);
+                      });
+
+                      final success = await actionDeleteAddressService(
+                        removed.documentId!,
+                      );
+
+                      if (!success && mounted) {
+                        setState(() {
+                          _addressList.insert(
+                            removedIndex.clamp(0, _addressList.length),
+                            removed,
+                          );
+                        });
+                        Message.errorMessage(
+                          context,
+                          'Gagal menghapus di server, dibatalkan',
                         );
-                      },
-                      child: Card(
-                        child: Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                item.address ?? "-",
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
+                      }else{
+                        Message.successMessage(
+                          context,
+                          'Berhasil menghapus di server',
+                        );
+                      }
+                    },
+                    background: Container(color: Colors.red),
+                    secondaryBackground: Container(color: Colors.redAccent),
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  AddressDetailPage(data: item),
+                            ),
+                          );
+                        },
+                        child: Card(
+                          child: Padding(
+                            padding: const EdgeInsets.all(12),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  item.address ?? "-",
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(height: 2),
-                              Text(item.town ?? "-"),
-                              const SizedBox(height: 6),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      item.latitude?.toString() ?? "-",
+                                const SizedBox(height: 2),
+                                Text(item.town ?? "-"),
+                                const SizedBox(height: 6),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        item.latitude?.toString() ?? "-",
+                                      ),
                                     ),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      item.longitude?.toString() ?? "-",
-                                      textAlign: TextAlign.end,
+                                    Expanded(
+                                      child: Text(
+                                        item.longitude?.toString() ?? "-",
+                                        textAlign: TextAlign.end,
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ],
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),

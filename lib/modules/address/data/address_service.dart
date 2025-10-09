@@ -45,16 +45,34 @@ Future<bool> actionSaveAddressService(
       body: jsonEncode({'data': parseData.toJson()}),
     );
     print(response.body);
-
     return response.statusCode == 200 || response.statusCode == 201;
   } else {
     if (parseData.id == null) return false;
     response = await http.put(
-      Uri.parse('$ADDRESS_URL/${parseData.id}'),
+      Uri.parse('$ADDRESS_URL/${parseData.documentId}'),
       headers: headers,
       body: jsonEncode({'data': parseData.toJson()}),
     );
     print(response.body);
     return response.statusCode == 200;
   }
+}
+
+Future<bool> actionDeleteAddressService(String documentId) async {
+  print(documentId);
+  final token = await SecureStorageUtils.readData(key: SP_TOKEN);
+  final headers = {
+    'Authorization': 'Bearer $token',
+    'Accept': 'application/json',
+  };
+
+  http.Response response;
+
+  if (documentId == null) return false;
+  response = await http.delete(
+    Uri.parse('$ADDRESS_URL/${documentId}'),
+    headers: headers,
+  );
+
+  return response.statusCode == 200 || response.statusCode == 204;
 }

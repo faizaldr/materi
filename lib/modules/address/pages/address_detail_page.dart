@@ -26,13 +26,14 @@ class _AddressDetailPageState extends State<AddressDetailPage> {
   @override
   void initState() {
     super.initState();
-    data = widget.data;
-    if (data != null) {
-      _addressController.text = data!.address!;
-      _townController.text = data!.town!;
-      _type = data!.type;
-      _latitude = data!.latitude;
-      _longitude = data!.longitude;
+    data = widget.data ?? new Data();
+    print(data);
+    if (data?.id != null) {
+      _addressController.text = data?.address! ?? "";
+      _townController.text = data?.town! ?? "";
+      _type = data?.type ?? "";
+      _latitude = data?.latitude ?? 0.0;
+      _longitude = data?.longitude ?? 0.0;
     }
   }
 
@@ -117,11 +118,8 @@ class _AddressDetailPageState extends State<AddressDetailPage> {
     bool result = true;
     if (data!.id == null) {
       result = await actionSaveAddressService(data!);
-      print(data!.toJson());
     } else {
       result = await actionSaveAddressService(data!, isInsert: false);
-      print(data!.toJson());
-
     }
     result
         ? Message.successMessage(context, "Berhasil")

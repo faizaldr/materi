@@ -65,16 +65,16 @@ class Data {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if(this.id != null) data['id'] = this.id;
-    if(this.documentId != null) data['documentId'] = this.documentId;
+    // if(this.id != null) data['id'] = this.id;
+    // if(this.documentId != null) data['documentId'] = this.documentId;
     if(this.address != null) data['address'] = this.address;
     if(this.town != null) data['town'] = this.town;
     if(this.type != null) data['type'] = this.type;
     if(this.latitude != null) data['latitude'] = this.latitude;
     if(this.longitude != null) data['longitude'] = this.longitude;
-    if(this.createdAt != null) data['createdAt'] = this.createdAt;
-    if(this.updatedAt != null) data['updatedAt'] = this.updatedAt;
-    if(this.publishedAt != null) data['publishedAt'] = this.publishedAt;
+    // if(this.createdAt != null) data['createdAt'] = this.createdAt;
+    // if(this.updatedAt != null) data['updatedAt'] = this.updatedAt;
+    // if(this.publishedAt != null) data['publishedAt'] = this.publishedAt;
     return data;
   }
 }
