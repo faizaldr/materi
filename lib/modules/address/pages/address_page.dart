@@ -94,6 +94,10 @@ class _AddressPageState extends State<AddressPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Daftar Alamat"), centerTitle: true),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: Icon(Icons.add),
+      ),
       body: Column(
         children: [
           SizedBox(height: 20, child: Text("$_indexPage/$_maxIndexPage")),
