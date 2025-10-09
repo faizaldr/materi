@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:materi/component/text_form_component.dart';
+import 'package:materi/modules/address/data/address_service.dart';
 import 'package:materi/modules/address/models/address_model.dart';
+import 'package:materi/utils/message.dart';
 import 'package:platform/platform.dart';
 
 class AddressDetailPage extends StatefulWidget {
@@ -68,33 +70,62 @@ class _AddressDetailPageState extends State<AddressDetailPage> {
               ),
               SizedBox(height: 20),
               Container(
-                padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                // padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                 child: Platform.iOS == true
                     ? CupertinoButton(
                         child: Text(_type ?? "Pilih Tipe"),
                         onPressed: () => _showActionSheet(context),
                       )
-                    : DropdownButton(
-                        hint: Text("Pilih Tipe Alamat"),
-                        items: _dropDownItem,
-                        value: _type,
-                        onChanged: _dropdownChange,
+                    : ListTile(
+                        leading: Icon(Icons.category),
+                        title: Text("Pilih Tipe Alamat"),
+                        subtitle: DropdownButton(
+                          hint: Text("Pilih Tipe Alamat"),
+                          items: _dropDownItem,
+                          value: _type,
+                          onChanged: _dropdownChange,
+                        ),
                       ),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(30),
-                  border: BoxBorder.all(color: Colors.black, strokeAlign: 1),
-                ),
+                // decoration: BoxDecoration(
+                //   color: Colors.white,
+                //   borderRadius: BorderRadius.circular(30),
+                //   border: BoxBorder.all(color: Colors.black, strokeAlign: 1),
+                // ),
               ),
               ListTile(
                 leading: Icon(Icons.gps_fixed),
                 title: Text("${_latitude} | ${_longitude}"),
+              ),
+              ElevatedButton(
+                onPressed: _actionSaveAddress,
+                child: Text("Simpan"),
               ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  _actionSaveAddress() async {
+    data!.address = _addressController.text;
+    data!.town = _townController.text;
+    data!.type = _type;
+    data!.latitude = _latitude;
+    data!.longitude = _longitude;
+
+    bool result = true;
+    if (data!.id == null) {
+      result = await actionSaveAddressService(data!);
+      print(data!.toJson());
+    } else {
+      result = await actionSaveAddressService(data!, isInsert: false);
+      print(data!.toJson());
+
+    }
+    result
+        ? Message.successMessage(context, "Berhasil")
+        : Message.errorMessage(context, "Gagal");
   }
 
   _showActionSheet(context) {

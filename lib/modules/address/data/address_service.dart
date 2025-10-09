@@ -24,3 +24,37 @@ Future<AddressModel?> actionGetAddressService(int indexPage) async {
   }
   return null;
 }
+
+Future<bool> actionSaveAddressService(
+  Data parseData, {
+  bool isInsert = true,
+}) async {
+  final token = await SecureStorageUtils.readData(key: SP_TOKEN);
+  final headers = {
+    'Authorization': 'Bearer $token',
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+  };
+
+  http.Response response;
+
+  if (isInsert) {
+    response = await http.post(
+      Uri.parse(ADDRESS_URL),
+      headers: headers,
+      body: jsonEncode({'data': parseData.toJson()}),
+    );
+    print(response.body);
+
+    return response.statusCode == 200 || response.statusCode == 201;
+  } else {
+    if (parseData.id == null) return false;
+    response = await http.put(
+      Uri.parse('$ADDRESS_URL/${parseData.id}'),
+      headers: headers,
+      body: jsonEncode({'data': parseData.toJson()}),
+    );
+    print(response.body);
+    return response.statusCode == 200;
+  }
+}
