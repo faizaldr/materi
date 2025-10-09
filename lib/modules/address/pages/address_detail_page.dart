@@ -7,6 +7,7 @@ import 'package:materi/modules/address/data/location_service.dart';
 import 'package:materi/modules/address/models/address_model.dart';
 import 'package:materi/utils/message.dart';
 import 'package:platform/platform.dart';
+import 'package:provider/provider.dart';
 
 class AddressDetailPage extends StatefulWidget {
   Data? data;
@@ -43,69 +44,78 @@ class _AddressDetailPageState extends State<AddressDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
-        child: Form(
-          child: ListView(
-            children: [
-              SizedBox(height: 20),
-              Text(
-                widget.data == null ? "Tambah Data" : "Ubah Data",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(height: 20),
-              TextFormComponent(
-                Icons.share_location_rounded,
-                "Alamat anda",
-                "Alamat",
-                false,
-                _addressController,
-                TextInputType.name,
-              ),
-              SizedBox(height: 20),
-              TextFormComponent(
-                Icons.location_city,
-                "Kota anda",
-                "Kota",
-                false,
-                _townController,
-                TextInputType.name,
-              ),
-              SizedBox(height: 20),
-              Container(
-                // padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                child: Platform.iOS == true
-                    ? CupertinoButton(
-                        child: Text(_type ?? "Pilih Tipe"),
-                        onPressed: () => _showActionSheet(context),
-                      )
-                    : ListTile(
-                        leading: Icon(Icons.category),
-                        title: Text("Pilih Tipe Alamat"),
-                        subtitle: DropdownButton(
-                          hint: Text("Pilih Tipe Alamat"),
-                          items: _dropDownItem,
-                          value: _type,
-                          onChanged: _dropdownChange,
+    return StreamProvider<LatLon>(
+      create: (context) => locationService!.locationStream,
+      initialData: LatLon(0.0, 0.0),
+      child: Scaffold(
+        body: Container(
+          padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+          child: Form(
+            child: ListView(
+              children: [
+                SizedBox(height: 20),
+                Text(
+                  widget.data == null ? "Tambah Data" : "Ubah Data",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 20),
+                TextFormComponent(
+                  Icons.share_location_rounded,
+                  "Alamat anda",
+                  "Alamat",
+                  false,
+                  _addressController,
+                  TextInputType.name,
+                ),
+                SizedBox(height: 20),
+                TextFormComponent(
+                  Icons.location_city,
+                  "Kota anda",
+                  "Kota",
+                  false,
+                  _townController,
+                  TextInputType.name,
+                ),
+                SizedBox(height: 20),
+                Container(
+                  // padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                  child: Platform.iOS == true
+                      ? CupertinoButton(
+                          child: Text(_type ?? "Pilih Tipe"),
+                          onPressed: () => _showActionSheet(context),
+                        )
+                      : ListTile(
+                          leading: Icon(Icons.category),
+                          title: Text("Pilih Tipe Alamat"),
+                          subtitle: DropdownButton(
+                            hint: Text("Pilih Tipe Alamat"),
+                            items: _dropDownItem,
+                            value: _type,
+                            onChanged: _dropdownChange,
+                          ),
                         ),
-                      ),
-                // decoration: BoxDecoration(
-                //   color: Colors.white,
-                //   borderRadius: BorderRadius.circular(30),
-                //   border: BoxBorder.all(color: Colors.black, strokeAlign: 1),
+                  // decoration: BoxDecoration(
+                  //   color: Colors.white,
+                  //   borderRadius: BorderRadius.circular(30),
+                  //   border: BoxBorder.all(color: Colors.black, strokeAlign: 1),
+                  // ),
+                ),
+                Builder(
+                  builder: (context) {
+                    final latlon = context.watch<LatLon>();
+                    return ListTile(
+                      leading: Icon(Icons.gps_fixed),
+                      title: Text("${latlon.latitude} | ${latlon.longitude}"),
+                    );
+                  },
+                ),
+                // ElevatedButton(
+                //   onPressed: _actionSaveAddress,
+                //   child: Text("Simpan"),
                 // ),
-              ),
-              ListTile(
-                leading: Icon(Icons.gps_fixed),
-                title: Text("${_latitude} | ${_longitude}"),
-              ),
-              ElevatedButton(
-                onPressed: _actionSaveAddress,
-                child: Text("Simpan"),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
