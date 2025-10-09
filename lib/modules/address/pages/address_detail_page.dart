@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:materi/component/text_form_component.dart';
 import 'package:materi/modules/address/models/address_model.dart';
+import 'package:platform/platform.dart';
 
 class AddressDetailPage extends StatefulWidget {
   Data? data;
@@ -65,13 +67,18 @@ class _AddressDetailPageState extends State<AddressDetailPage> {
               ),
               SizedBox(height: 20),
               Container(
-                padding: EdgeInsets.fromLTRB(10,0,10,0),
-                child: DropdownButton(
-                  hint: Text("Pilih Tipe Alamat"),
-                  items: _dropDownItem,
-                  value: _type,
-                  onChanged: _dropdownChange,
-                ),
+                padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                child: Platform.iOS == true
+                    ? CupertinoButton(
+                        child: Text(_type ?? "Pilih Tipe"),
+                        onPressed: () => _showActionSheet(context),
+                      )
+                    : DropdownButton(
+                        hint: Text("Pilih Tipe Alamat"),
+                        items: _dropDownItem,
+                        value: _type,
+                        onChanged: _dropdownChange,
+                      ),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(30),
@@ -85,6 +92,33 @@ class _AddressDetailPageState extends State<AddressDetailPage> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  _showActionSheet(context) {
+    showCupertinoModalPopup(
+      context: context,
+      builder: (context) => CupertinoActionSheet(
+        title: Text("Pilih Tipe Alamat"),
+        actions: [
+          CupertinoActionSheetAction(
+            onPressed: () {
+              setState(() {
+                _type = "Rumah";
+              });
+            },
+            child: Text("Rumah"),
+          ),
+          CupertinoActionSheetAction(
+            onPressed: () {
+              setState(() {
+                _type = "Kos";
+              });
+            },
+            child: Text("Kos"),
+          ),
+        ],
       ),
     );
   }
