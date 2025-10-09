@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:location/location.dart';
 import 'package:materi/component/text_form_component.dart';
 import 'package:materi/modules/address/data/address_service.dart';
+import 'package:materi/modules/address/data/location_service.dart';
 import 'package:materi/modules/address/models/address_model.dart';
 import 'package:materi/utils/message.dart';
 import 'package:platform/platform.dart';
@@ -22,12 +24,14 @@ class _AddressDetailPageState extends State<AddressDetailPage> {
   String? _type;
   double? _latitude;
   double? _longitude;
+  LocationService? locationService;
 
   @override
   void initState() {
     super.initState();
     data = widget.data ?? new Data();
     print(data);
+    locationService = LocationService();
     if (data?.id != null) {
       _addressController.text = data?.address! ?? "";
       _townController.text = data?.town! ?? "";
