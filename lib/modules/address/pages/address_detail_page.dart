@@ -69,7 +69,7 @@ class _AddressDetailPageState extends State<AddressDetailPage> {
                 child: DropdownButton(
                   hint: Text("Pilih Tipe Alamat"),
                   items: _dropDownItem,
-                  value: _selectedValue,
+                  value: _type,
                   onChanged: _dropdownChange,
                 ),
                 decoration: BoxDecoration(
@@ -89,11 +89,9 @@ class _AddressDetailPageState extends State<AddressDetailPage> {
     );
   }
 
-  String? _selectedValue;
-
   _dropdownChange(value) {
     setState(() {
-      _selectedValue = value;
+      _type = value;
     });
   }
 
