@@ -6,6 +6,7 @@ import 'package:platform/platform.dart';
 
 class AddressDetailPage extends StatefulWidget {
   Data? data;
+  AddressDetailPage({this.data, Key? key}) : super(key: key);
   @override
   State<StatefulWidget> createState() {
     return _AddressDetailPageState();
@@ -87,7 +88,7 @@ class _AddressDetailPageState extends State<AddressDetailPage> {
               ),
               ListTile(
                 leading: Icon(Icons.gps_fixed),
-                title: Text("${_latitude} - ${_longitude}"),
+                title: Text("${_latitude} | ${_longitude}"),
               ),
             ],
           ),

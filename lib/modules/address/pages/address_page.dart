@@ -137,35 +137,46 @@ class _AddressPageState extends State<AddressPage> {
                   final item = _addressList[index];
                   return Padding(
                     padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-                    child: Card(
-                      child: Padding(
-                        padding: const EdgeInsets.all(12),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              item.address ?? "-",
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => AddressDetailPage(data: item),
+                          ),
+                        );
+                      },
+                      child: Card(
+                        child: Padding(
+                          padding: const EdgeInsets.all(12),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                item.address ?? "-",
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            ),
-                            const SizedBox(height: 2),
-                            Text(item.town ?? "-"),
-                            const SizedBox(height: 6),
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Text(item.latitude?.toString() ?? "-"),
-                                ),
-                                Expanded(
-                                  child: Text(
-                                    item.longitude?.toString() ?? "-",
-                                    textAlign: TextAlign.end,
+                              const SizedBox(height: 2),
+                              Text(item.town ?? "-"),
+                              const SizedBox(height: 6),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      item.latitude?.toString() ?? "-",
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ],
+                                  Expanded(
+                                    child: Text(
+                                      item.longitude?.toString() ?? "-",
+                                      textAlign: TextAlign.end,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
