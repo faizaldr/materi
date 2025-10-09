@@ -22,6 +22,7 @@ class _AddressPageState extends State<AddressPage> {
   }
 
   void _initData() async {
+    _indexPage = 1;
     final result = await actionGetAddressService(_indexPage);
     if (result != null)
       setState(() {
@@ -43,11 +44,30 @@ class _AddressPageState extends State<AddressPage> {
     }
   }
 
+  _onRefresh() {
+    _appendData(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Daftar Alamat"), centerTitle: true),
-      // body: ,
+      body: RefreshIndicator(
+        child: ListView.builder(
+          itemCount: _addressList!.length,
+          itemBuilder: (context, index) =>
+              Padding(padding: EdgeInsetsGeometry.all(10), child: Card(
+                child: IntrinsicHeight(
+                  child: Column(
+                    children: [
+                      Text(_addressList![index]!.address!)
+                    ],
+                  ),
+                ),
+              )),
+        ),
+        onRefresh: () => _onRefresh(),
+      ),
     );
   }
 }
