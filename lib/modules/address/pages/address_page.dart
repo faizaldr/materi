@@ -14,11 +14,27 @@ class _AddressPageState extends State<AddressPage> {
   int _indexPage = 1;
   int _maxIndexPage = 1;
   List<Data>? _addressList = [];
+  final ScrollController _scrollController = ScrollController();
+  bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
     _initData();
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels >=
+              _scrollController.position.maxScrollExtent - 200 &&
+          !_isLoading) {
+        _appendData(context);
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _scrollController.dispose();
   }
 
   void _initData() async {
@@ -54,6 +70,7 @@ class _AddressPageState extends State<AddressPage> {
       appBar: AppBar(title: Text("Daftar Alamat"), centerTitle: true),
       body: RefreshIndicator(
         child: ListView.builder(
+          controller: _scrollController,
           itemCount: _addressList!.length,
           itemBuilder: (context, index) => Padding(
             padding: EdgeInsetsGeometry.fromLTRB(5, 0, 5, 0),
@@ -72,7 +89,8 @@ class _AddressPageState extends State<AddressPage> {
                         ),
                         Expanded(
                           child: Text(
-                            _addressList![index]!.longitude!.toString(),textAlign: TextAlign.end,
+                            _addressList![index]!.longitude!.toString(),
+                            textAlign: TextAlign.end,
                           ),
                         ),
                       ],
