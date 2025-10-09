@@ -55,16 +55,33 @@ class _AddressPageState extends State<AddressPage> {
       body: RefreshIndicator(
         child: ListView.builder(
           itemCount: _addressList!.length,
-          itemBuilder: (context, index) =>
-              Padding(padding: EdgeInsetsGeometry.all(10), child: Card(
-                child: IntrinsicHeight(
-                  child: Column(
-                    children: [
-                      Text(_addressList![index]!.address!)
-                    ],
-                  ),
+          itemBuilder: (context, index) => Padding(
+            padding: EdgeInsetsGeometry.fromLTRB(5, 0, 5, 0),
+            child: Card(
+              child: IntrinsicHeight(
+                child: Column(
+                  children: [
+                    Text(_addressList![index]!.address!),
+                    Text(_addressList![index]!.town!),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            _addressList![index]!.latitude!.toString(),
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            _addressList![index]!.longitude!.toString(),textAlign: TextAlign.end,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-              )),
+              ),
+            ),
+          ),
         ),
         onRefresh: () => _onRefresh(),
       ),
