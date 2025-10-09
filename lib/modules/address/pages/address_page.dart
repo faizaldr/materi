@@ -11,11 +11,12 @@ class AddressPage extends StatefulWidget {
 
 class _AddressPageState extends State<AddressPage> {
   int _indexPage = 1;
-  int _maxIndexPage = 1; 
+  int _maxIndexPage = 1;
   final List<Data> _addressList = [];
 
-  final RefreshController _refreshController =
-      RefreshController(initialRefresh: false);
+  final RefreshController _refreshController = RefreshController(
+    initialRefresh: false,
+  );
 
   @override
   void initState() {
@@ -32,9 +33,10 @@ class _AddressPageState extends State<AddressPage> {
         _addressList
           ..clear()
           ..addAll(result.data ?? []);
-        _maxIndexPage = result.meta?.pagination?.pageCount ??
-                        result.meta?.pagination?.page ??
-                        1;
+        _maxIndexPage =
+            result.meta?.pagination?.pageCount ??
+            result.meta?.pagination?.page ??
+            1;
       });
     } catch (e) {
       if (mounted) Message.errorMessage(context, "Gagal memuat data");
@@ -70,9 +72,9 @@ class _AddressPageState extends State<AddressPage> {
       });
 
       if (_indexPage >= _maxIndexPage) {
-        _refreshController.loadNoData(); 
+        _refreshController.loadNoData();
       } else {
-        _refreshController.loadComplete(); 
+        _refreshController.loadComplete();
       }
     } catch (e) {
       _refreshController.loadFailed();
@@ -92,44 +94,78 @@ class _AddressPageState extends State<AddressPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Daftar Alamat"), centerTitle: true),
-      body: SmartRefresher(
-        controller: _refreshController,
-        enablePullDown: true,  
-        enablePullUp: true,     
-        onRefresh: _onPullDown,
-        onLoading: _onPullUp,  
-        child: ListView.builder(
-          physics: const AlwaysScrollableScrollPhysics(),
-          itemCount: _addressList.length,
-          itemBuilder: (context, index) {
-            final item = _addressList[index];
-            return Padding(
-              padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-              child: Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(item.address ?? "-", style: const TextStyle(fontWeight: FontWeight.bold)),
-                      const SizedBox(height: 2),
-                      Text(item.town ?? "-"),
-                      const SizedBox(height: 6),
-                      Row(
-                        children: [
-                          Expanded(child: Text(item.latitude?.toString() ?? "-")),
-                          Expanded(
-                            child: Text(item.longitude?.toString() ?? "-", textAlign: TextAlign.end),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
+      body: Column(
+        children: [
+          SizedBox(height: 20, child: Text("$_indexPage/$_maxIndexPage")),
+          Expanded(
+            child: SmartRefresher(
+              controller: _refreshController,
+              enablePullDown: true,
+              enablePullUp: true,
+              onRefresh: _onPullDown,
+              onLoading: _onPullUp,
+              footer: CustomFooter(
+                builder: (context, mode) {
+                  Widget body;
+                  if (mode == LoadStatus.idle) {
+                    body = Text("pull up load");
+                  } else if (mode == LoadStatus.loading) {
+                    body = CircularProgressIndicator();
+                  } else if (mode == LoadStatus.failed) {
+                    body = Text("Load Failed!Click retry!");
+                  } else if (mode == LoadStatus.canLoading) {
+                    body = Text("release to load more");
+                  } else {
+                    body = Text("No more Data");
+                  }
+                  return SizedBox(height: 55.0, child: Center(child: body));
+                },
               ),
-            );
-          },
-        ),
+              child: ListView.builder(
+                physics: const AlwaysScrollableScrollPhysics(),
+                itemCount: _addressList.length,
+                itemBuilder: (context, index) {
+                  final item = _addressList[index];
+                  return Padding(
+                    padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                    child: Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              item.address ?? "-",
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 2),
+                            Text(item.town ?? "-"),
+                            const SizedBox(height: 6),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Text(item.latitude?.toString() ?? "-"),
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    item.longitude?.toString() ?? "-",
+                                    textAlign: TextAlign.end,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
