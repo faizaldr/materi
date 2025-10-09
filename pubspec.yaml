@@ -41,6 +41,7 @@ dependencies:
   cached_network_image: ^3.4.1
   location: ^8.0.1 #gps location
   provider: ^6.1.5+1 #state management
+  pull_to_refresh: ^2.0.0
 
 dev_dependencies:
   flutter_test:
