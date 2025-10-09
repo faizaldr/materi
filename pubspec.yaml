@@ -39,6 +39,8 @@ dependencies:
   top_snackbar_flutter: ^3.3.0
   carousel_slider: ^5.1.1
   cached_network_image: ^3.4.1
+  location: ^8.0.1 #gps location
+  provider: ^6.1.5+1 #state management
 
 dev_dependencies:
   flutter_test:
