@@ -2,27 +2,27 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 import 'package:materi/component/text_form_component.dart';
-import 'package:materi/modules/address/data/address_service.dart';
-import 'package:materi/modules/address/data/location_service.dart';
-import 'package:materi/modules/address/models/address_model.dart';
+import 'package:materi/modules/tracking/data/tracking_service.dart';
+import 'package:materi/modules/tracking/data/location_service.dart';
+import 'package:materi/modules/tracking/models/tracking_model.dart';
 import 'package:materi/utils/message.dart';
 import 'package:platform/platform.dart';
 import 'package:provider/provider.dart';
 
-class AddressDetailPage extends StatefulWidget {
+class TrackingDetailPage extends StatefulWidget {
   Data? data;
-  AddressDetailPage({this.data, Key? key}) : super(key: key);
+  TrackingDetailPage({this.data, Key? key}) : super(key: key);
   @override
   State<StatefulWidget> createState() {
-    return _AddressDetailPageState();
+    return _TrackingDetailPageState();
   }
 }
 
-class _AddressDetailPageState extends State<AddressDetailPage> {
+class _TrackingDetailPageState extends State<TrackingDetailPage> {
   Data? data;
-  TextEditingController _addressController = TextEditingController();
-  TextEditingController _townController = TextEditingController();
-  String? _type;
+  TextEditingController _placeNameController = TextEditingController();
+  TextEditingController _placeTypeController = TextEditingController();
+  TextEditingController _commentController = TextEditingController();
   double? _latitude;
   double? _longitude;
   LocationService? locationService;
@@ -34,9 +34,9 @@ class _AddressDetailPageState extends State<AddressDetailPage> {
     print(data);
     locationService = LocationService();
     if (data?.id != null) {
-      _addressController.text = data?.address! ?? "";
-      _townController.text = data?.town! ?? "";
-      _type = data?.type ?? "";
+      _placeNameController.text = data?.placeName! ?? "";
+      _placeTypeController.text = data?.placeType ?? "";
+      _commentController.text = data?.comment! ?? "";
       _latitude = data?.latitude ?? 0.0;
       _longitude = data?.longitude ?? 0.0;
     }
@@ -61,45 +61,30 @@ class _AddressDetailPageState extends State<AddressDetailPage> {
                 ),
                 SizedBox(height: 20),
                 TextFormComponent(
-                  Icons.share_location_rounded,
-                  "Alamat anda",
-                  "Alamat",
+                  Icons.place,
+                  "Nama Lokasi tujuan",
+                  "Lokasi",
                   false,
-                  _addressController,
+                  _placeNameController,
                   TextInputType.name,
                 ),
                 SizedBox(height: 20),
                 TextFormComponent(
-                  Icons.location_city,
-                  "Kota anda",
-                  "Kota",
+                  Icons.multitrack_audio,
+                  "Tipe Lokasi tujuan",
+                  "Tipe",
                   false,
-                  _townController,
+                  _placeTypeController,
                   TextInputType.name,
                 ),
                 SizedBox(height: 20),
-                Container(
-                  // padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                  child: Platform.iOS == true
-                      ? CupertinoButton(
-                          child: Text(_type ?? "Pilih Tipe"),
-                          onPressed: () => _showActionSheet(context),
-                        )
-                      : ListTile(
-                          leading: Icon(Icons.category),
-                          title: Text("Pilih Tipe Alamat"),
-                          subtitle: DropdownButton(
-                            hint: Text("Pilih Tipe Alamat"),
-                            items: _dropDownItem,
-                            value: _type,
-                            onChanged: _dropdownChange,
-                          ),
-                        ),
-                  // decoration: BoxDecoration(
-                  //   color: Colors.white,
-                  //   borderRadius: BorderRadius.circular(30),
-                  //   border: BoxBorder.all(color: Colors.black, strokeAlign: 1),
-                  // ),
+                TextFormComponent(
+                  Icons.comment,
+                  "Komentar anda",
+                  "Komentar",
+                  false,
+                  _commentController,
+                  TextInputType.name,
                 ),
                 Builder(
                   builder: (context) {
@@ -125,9 +110,9 @@ class _AddressDetailPageState extends State<AddressDetailPage> {
   }
 
   _actionSaveAddress() async {
-    data!.address = _addressController.text;
-    data!.town = _townController.text;
-    data!.type = _type;
+    data!.placeName = _placeNameController.text;
+    data!.comment = _commentController.text;
+    data!.placeType = _placeTypeController.text;
     data!.latitude = _latitude;
     data!.longitude = _longitude;
 
@@ -151,7 +136,7 @@ class _AddressDetailPageState extends State<AddressDetailPage> {
           CupertinoActionSheetAction(
             onPressed: () {
               setState(() {
-                _type = "Rumah";
+                _placeTypeController.text = "Rumah";
               });
             },
             child: Text("Rumah"),
@@ -159,7 +144,7 @@ class _AddressDetailPageState extends State<AddressDetailPage> {
           CupertinoActionSheetAction(
             onPressed: () {
               setState(() {
-                _type = "Kos";
+                _placeTypeController.text = "Kos";
               });
             },
             child: Text("Kos"),
@@ -171,7 +156,7 @@ class _AddressDetailPageState extends State<AddressDetailPage> {
 
   _dropdownChange(value) {
     setState(() {
-      _type = value;
+      _placeTypeController = value;
     });
   }
 

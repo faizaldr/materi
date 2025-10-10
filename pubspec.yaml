@@ -42,6 +42,9 @@ dependencies:
   location: ^8.0.1 #gps location
   provider: ^6.1.5+1 #state management
   pull_to_refresh: ^2.0.0
+  image_picker: ^1.1.2
+  mime: ^1.0.4
+  http_parser: ^4.0.2
 
 dev_dependencies:
   flutter_test:

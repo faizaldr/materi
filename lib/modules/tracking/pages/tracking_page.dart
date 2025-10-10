@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:materi/modules/address/data/address_service.dart';
-import 'package:materi/modules/address/models/address_model.dart';
-import 'package:materi/modules/address/pages/address_detail_page.dart';
+import 'package:materi/modules/tracking/data/tracking_service.dart';
+import 'package:materi/modules/tracking/models/tracking_model.dart';
+import 'package:materi/modules/tracking/pages/tracking_detail_page.dart';
 import 'package:materi/utils/message.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class AddressPage extends StatefulWidget {
+class TrackingPage extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _AddressPageState();
+  State<StatefulWidget> createState() => _TrackingPageState();
 }
 
-class _AddressPageState extends State<AddressPage> {
+class _TrackingPageState extends State<TrackingPage> {
   int _indexPage = 1;
   int _maxIndexPage = 1;
-  final List<Data> _addressList = [];
+  final List<Data> _trackingList = [];
 
   final RefreshController _refreshController = RefreshController(
     initialRefresh: false,
@@ -28,10 +28,10 @@ class _AddressPageState extends State<AddressPage> {
   Future<void> _loadFirstPage() async {
     _indexPage = 1;
     try {
-      final result = await actionGetAddressService(_indexPage);
+      final result = await actionGetTrackingService(_indexPage);
       if (!mounted || result == null) return;
       setState(() {
-        _addressList
+        _trackingList
           ..clear()
           ..addAll(result.data ?? []);
         _maxIndexPage =
@@ -63,13 +63,13 @@ class _AddressPageState extends State<AddressPage> {
 
     try {
       _indexPage++;
-      final result = await actionGetAddressService(_indexPage);
+      final result = await actionGetTrackingService(_indexPage);
       if (!mounted || result == null) {
         _refreshController.loadFailed();
         return;
       }
       setState(() {
-        _addressList.addAll(result.data ?? []);
+        _trackingList.addAll(result.data ?? []);
       });
 
       if (_indexPage >= _maxIndexPage) {
@@ -94,12 +94,14 @@ class _AddressPageState extends State<AddressPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Daftar Alamat"), centerTitle: true),
+      appBar: AppBar(title: const Text("Daftar Tracking"), centerTitle: true),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          // sendHardcodedFormData();
+
           Navigator.of(
             context,
-          ).push(MaterialPageRoute(builder: (context) => AddressDetailPage()));
+          ).push(MaterialPageRoute(builder: (context) => TrackingDetailPage()));
         },
         child: Icon(Icons.add),
       ),
@@ -132,9 +134,9 @@ class _AddressPageState extends State<AddressPage> {
               ),
               child: ListView.builder(
                 physics: const AlwaysScrollableScrollPhysics(),
-                itemCount: _addressList.length,
+                itemCount: _trackingList.length,
                 itemBuilder: (context, index) {
-                  final item = _addressList[index];
+                  final item = _trackingList[index];
                   return Dismissible(
                     key: Key(item.documentId!),
                     direction: DismissDirection.horizontal,
@@ -144,17 +146,18 @@ class _AddressPageState extends State<AddressPage> {
 
                       if (!mounted) return;
                       setState(() {
-                        _addressList.removeAt(removedIndex);
+                        _trackingList.removeAt(removedIndex);
                       });
 
-                      final success = await actionDeleteAddressService(
-                        removed.documentId!,
-                      );
+                      final success = false;
+                      await actionDeleteTrackingService(removed.documentId!);
+
+                      // await sendHardcodedFormData();
 
                       if (!success && mounted) {
                         setState(() {
-                          _addressList.insert(
-                            removedIndex.clamp(0, _addressList.length),
+                          _trackingList.insert(
+                            removedIndex.clamp(0, _trackingList.length),
                             removed,
                           );
                         });
@@ -162,7 +165,7 @@ class _AddressPageState extends State<AddressPage> {
                           context,
                           'Gagal menghapus di server, dibatalkan',
                         );
-                      }else{
+                      } else {
                         Message.successMessage(
                           context,
                           'Berhasil menghapus di server',
@@ -178,7 +181,7 @@ class _AddressPageState extends State<AddressPage> {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) =>
-                                  AddressDetailPage(data: item),
+                                  TrackingDetailPage(data: item),
                             ),
                           );
                         },
@@ -189,13 +192,14 @@ class _AddressPageState extends State<AddressPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  item.address ?? "-",
+                                  item.placeName ?? "-",
                                   style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
                                 const SizedBox(height: 2),
-                                Text(item.town ?? "-"),
+                                Text(item.placeType ?? "-"),
+                                Text(item.comment ?? "-"),
                                 const SizedBox(height: 6),
                                 Row(
                                   children: [

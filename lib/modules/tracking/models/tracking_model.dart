@@ -1,10 +1,10 @@
-class AddressModel {
+class TrackingModel {
   List<Data>? data;
   Meta? meta;
 
-  AddressModel({this.data, this.meta});
+  TrackingModel({this.data, this.meta});
 
-  AddressModel.fromJson(Map<String, dynamic> json) {
+  TrackingModel.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
       data = <Data>[];
       json['data'].forEach((v) {
@@ -29,9 +29,9 @@ class AddressModel {
 class Data {
   int? id;
   String? documentId;
-  String? address;
-  String? town;
-  String? type;
+  String? placeName;
+  String? placeType;
+  String? comment;
   double? latitude;
   double? longitude;
   String? createdAt;
@@ -41,9 +41,9 @@ class Data {
   Data(
       {this.id,
       this.documentId,
-      this.address,
-      this.town,
-      this.type,
+      this.placeName,
+      this.placeType,
+      this.comment,
       this.latitude,
       this.longitude,
       this.createdAt,
@@ -53,9 +53,9 @@ class Data {
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     documentId = json['documentId'];
-    address = json['address'];
-    town = json['town'];
-    type = json['type'];
+    placeName = json['placeName'];
+    placeType = json['placeType'];
+    comment = json['comment'];
     latitude = json['latitude'];
     longitude = json['longitude'];
     createdAt = json['createdAt'];
@@ -65,16 +65,11 @@ class Data {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    // if(this.id != null) data['id'] = this.id;
-    // if(this.documentId != null) data['documentId'] = this.documentId;
-    if(this.address != null) data['address'] = this.address;
-    if(this.town != null) data['town'] = this.town;
-    if(this.type != null) data['type'] = this.type;
+    if(this.placeName != null) data['placeName'] = this.placeName;
+    if(this.placeType != null) data['placeType'] = this.placeType;
+    if(this.comment != null) data['comment'] = this.comment;
     if(this.latitude != null) data['latitude'] = this.latitude;
     if(this.longitude != null) data['longitude'] = this.longitude;
-    // if(this.createdAt != null) data['createdAt'] = this.createdAt;
-    // if(this.updatedAt != null) data['updatedAt'] = this.updatedAt;
-    // if(this.publishedAt != null) data['publishedAt'] = this.publishedAt;
     return data;
   }
 }
